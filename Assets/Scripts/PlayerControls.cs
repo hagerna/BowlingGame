@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float forwardSpeed = 10;
+    public float horizontalControl = 4;
+    public bool movementLocked = false;
+
+    private Rigidbody rb;
+
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (movementLocked) return;
+        float moveLeftRight = Input.GetAxis("Horizontal");
+        Vector3 xAcceleration = Vector3.right * moveLeftRight * Time.deltaTime * horizontalControl;
+        rb.velocity += xAcceleration;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.velocity += Vector3.forward * forwardSpeed;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Pin")){
+            movementLocked = true;
+        }
     }
 }
