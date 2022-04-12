@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -9101435483345588464}
   m_Layer: 0
   m_Name: TestBall
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db55d5dac0fe4736a653d76b806bba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardSpeed: 20
+  forwardSpeed: 10
   horizontalControl: 4
   movementLocked: 1
   initialLaunch: 1

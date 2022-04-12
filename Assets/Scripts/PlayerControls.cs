@@ -31,6 +31,8 @@ public class PlayerControls : MonoBehaviour
     {
         if (collision.collider.CompareTag("Pin")){
             movementLocked = true;
+            Camera.main.GetComponent<CameraFollow>().follow = false;
+            // TriggerReset
         }
     }
 }

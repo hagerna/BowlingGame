@@ -10,16 +10,20 @@ public class LevelGenerator : MonoBehaviour
     public GameObject ball;
 
     public float pinSeparation = 1f;
+    public int playtestRows;
 
     // Start is called before the first frame update
     void Start()
     {
         if (generateOnStart)
         {
-            GenerateLevel(4, 50, 0);
+            GenerateLevel(playtestRows, 50, 0);
         }
     }
 
+    //Generate Level by instantiating lane, pins, and bowling ball (obstacles not implemented yet)
+    //PARAMETERS: pinRows --> passed to Generate pins (see 'rows' parameter)
+                //laneLength
     public void GenerateLevel(int pinRows, float laneLength, float pinOffset, Material laneColor = null)
     {
         Vector3 lanePosition = new Vector3(0, 0, (laneLength / 2f) - 5f);
@@ -38,7 +42,7 @@ public class LevelGenerator : MonoBehaviour
 
     //public function to be called on at level generation
     //PARAMETERS: rows is number of rows of pins (increase with difficulty),
-    //            pinPosition is position of first pin at top of triangle (based on lane length)
+                //pinPosition is position of first pin at top of triangle (based on lane length)
     public void GeneratePins(int rows, Vector3 pinPosition)
     {
         for (int rowSize = 1; rowSize < rows + 1; rowSize++)
@@ -63,5 +67,11 @@ public class LevelGenerator : MonoBehaviour
     void SelectPin(Vector3 position)
     {
         Instantiate(pin, position, Quaternion.identity);
+    }
+
+    public void NewBall()
+    {
+        Instantiate(ball, Vector3.up, Quaternion.LookRotation(Vector3.right));
+        Camera.main.GetComponent<CameraFollow>().Reset();
     }
 }
