@@ -24,14 +24,13 @@ public class TouchControls : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             Vector3 horizontal = Vector3.zero;
-            Debug.Log(touch.position);
             if (touch.position.x > 562.5f)
             {
-                horizontal = Vector3.right * (touch.position.x / 1125f) * Time.deltaTime * horizontalControl;
+                horizontal = Vector3.right * Time.deltaTime * horizontalControl;
                 rb.velocity += horizontal;
             } else if (touch.position.x < 562.5f)
             {
-                horizontal = -Vector3.right * (touch.position.x / 1125f) * Time.deltaTime * horizontalControl;
+                horizontal = -Vector3.right * Time.deltaTime * horizontalControl;
                 rb.velocity += horizontal;
             }
         }
@@ -57,7 +56,16 @@ public class TouchControls : MonoBehaviour
         {
             //Provide UI indicating predicted speed
             launchSpeed -= touch.deltaPosition.y;
-            touch = Input.GetTouch(0);
+            if (Input.touchCount != 0)
+            {
+                touch = Input.GetTouch(0);
+            }
+            else
+            {
+                Debug.Log("Restart");
+                StartCoroutine(InitialLaunch());
+                yield break;
+            }
             yield return new WaitForEndOfFrame();
         }
         while (touch.deltaPosition.y < 1)
@@ -67,5 +75,6 @@ public class TouchControls : MonoBehaviour
         launchSpeed = launchSpeed / 2000f * forwardSpeed;
         rb.velocity = new Vector3(0,0,launchSpeed);
         movementLocked = false;
+        Debug.Log("Roll");
     }
 }

@@ -31,7 +31,7 @@ public class LevelGenerator : MonoBehaviour
         }
         Vector3 firstPin = new Vector3(pinOffset, 1, laneLength - (pinRows * pinSeparation + 5.5f));
         GeneratePins(pinRows, firstPin);
-        Instantiate(ball, Vector3.zero, Quaternion.identity);
+        Instantiate(ball, Vector3.up, Quaternion.LookRotation(Vector3.right));
         //GenerateObstacles() --> potential function?
 
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    public float forwardSpeed = 10;
+    public float forwardSpeed = 20;
     public float horizontalControl = 4;
     public bool movementLocked = false;
 
