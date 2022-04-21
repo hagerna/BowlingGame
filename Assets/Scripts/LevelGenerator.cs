@@ -12,9 +12,32 @@ public class LevelGenerator : MonoBehaviour
     public float pinSeparation = 1f;
     public int playtestRows;
 
+    private static LevelGenerator _instance;
+    public static LevelGenerator instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<LevelGenerator>();
+                if (_instance == null)
+                {
+                    throw new UnityException("Instance of LevelGenerator not found in scene");
+                }
+            }
+            return _instance;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        if (_instance != null)
+        {
+            Destroy(_instance.gameObject);
+        }
+        _instance = this;
+        DontDestroyOnLoad(_instance);
         if (generateOnStart)
         {
             GenerateLevel(playtestRows, 50, 0);
@@ -23,7 +46,7 @@ public class LevelGenerator : MonoBehaviour
 
     //Generate Level by instantiating lane, pins, and bowling ball (obstacles not implemented yet)
     //PARAMETERS: pinRows --> passed to Generate pins (see 'rows' parameter)
-                //laneLength
+                //laneLength --> 
     public void GenerateLevel(int pinRows, float laneLength, float pinOffset, Material laneColor = null)
     {
         Vector3 lanePosition = new Vector3(0, 0, (laneLength / 2f) - 5f);
@@ -41,8 +64,8 @@ public class LevelGenerator : MonoBehaviour
     }
 
     //public function to be called on at level generation
-    //PARAMETERS: rows is number of rows of pins (increase with difficulty),
-                //pinPosition is position of first pin at top of triangle (based on lane length)
+    //PARAMETERS: rows --> number of rows of pins (increase with difficulty),
+                //pinPosition --> position of first pin at top of triangle (based on lane length)
     public void GeneratePins(int rows, Vector3 pinPosition)
     {
         for (int rowSize = 1; rowSize < rows + 1; rowSize++)
@@ -69,9 +92,9 @@ public class LevelGenerator : MonoBehaviour
         Instantiate(pin, position, Quaternion.identity);
     }
 
+    // Create a new ball object for the player to roll again
     public void NewBall()
     {
         Instantiate(ball, Vector3.up, Quaternion.LookRotation(Vector3.right));
-        Camera.main.GetComponent<CameraFollow>().Reset();
     }
 }

@@ -17,19 +17,9 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-            Debug.Log(player);
-        } else if (follow)
+        if (follow)
         {
             transform.position = player.transform.position + offset;
         }
-    }
-
-    public void Reset()
-    {
-        transform.position = offset;
-        player = GameObject.FindGameObjectWithTag("Player");
     }
 }

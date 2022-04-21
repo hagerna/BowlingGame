@@ -17,8 +17,7 @@ public class PinScript : MonoBehaviour
         bool standing = true;
         while (standing)
         {
-            Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 1f);
-            if (hit.collider != null && hit.collider.CompareTag("Lane")) //if the pin is still standing
+            if (transform.up == Vector3.up) //if the pin is still standing
             {
                 yield return new WaitForSeconds(0.1f);
             }
@@ -35,6 +34,6 @@ public class PinScript : MonoBehaviour
     void PinFallEffect()
     {
         //Update pin counter
-        
+        GameManager.instance.pinsCollected++;
     }
 }
