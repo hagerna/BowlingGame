@@ -8,17 +8,14 @@ public class PinGeneration : MonoBehaviour
     public float pinXSeparation = 0.75f;
     public float pinZSeparation = 0.75f;
     public int rowNumber;
-    
+
+    //TO BE DELETED FOR FINAL GAME, CAN BU USED FOR TESTING
+
+
     // Start is called before the first frame update
     void Start()
     {
         GeneratePins(rowNumber, new Vector3(0, 1.15f, 13.75f));
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     //public function to be called on at level generation

@@ -13,7 +13,7 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        // make the player follow the game object this script is attached to
+        // make the camera follow the game object this script is attached to
         Camera.main.GetComponent<CameraFollow>().player = gameObject;
         Camera.main.GetComponent<CameraFollow>().follow = true;
     }
@@ -35,7 +35,7 @@ public class PlayerControls : MonoBehaviour
         if (collision.collider.CompareTag("Pin")){
             movementLocked = true;
             Camera.main.GetComponent<CameraFollow>().follow = false;
-            // Trigger explosion
+            // Trigger explosion if explosive ball
         }
         if (collision.collider.CompareTag("Obstacle"))
         {

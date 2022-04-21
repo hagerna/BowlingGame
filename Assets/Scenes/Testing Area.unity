@@ -334,7 +334,8 @@ MonoBehaviour:
   ballsLeft: 0
   level: 0
   strikes: 0
-  current: 0
+  currentStrikeCount: 0
+  bumperLives: 3
   pinsCollected: 0
 --- !u!1001 &211977589959964704
 PrefabInstance:

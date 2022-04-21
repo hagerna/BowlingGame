@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public int ballsLeft, level, strikes, currentStrikeCount, bumperLives;
+    //Public Variables to be accessed by other scripts:
+        //"ballsLeft" --> in tracking the lives that the player has, used in BallsReset function (GameManager)
+        //"ballsPerLevel" --> self explanatory, used to reset "ballsLeft" between levels
+        //"level" --> tracks the player's current level, to be used for increasing difficulty
+        //"strikes" --> total strikes the player has gotten so far this run, used for bonus at end (?)
+        //"strikeStreak" --> current consecutive strikes, used to determine what to display (ex. Turkey!)
+        //"bumperLives" --> how many hits the bumpers can take before disappearing (doesn't reset level to level)
+        //"bumperLivesTotal" --> to reset bumperLives between runs
+        //"pinsCollected" --> pins knocked over, to be used as currency for upgrade menu
+    public int ballsLeft, ballsPerLevel, level, strikes, strikeStreak, bumperLives, bumperLivesTotal;
     public float pinsCollected;
 
     private static GameManager _instance;
@@ -27,6 +36,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Singleton Pattern
         if (_instance != null)
         {
             Destroy(_instance.gameObject);
@@ -57,7 +67,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Check to see if there are any pins left standing, if not, go to next level
+    // Check to see if there are any pins left, if not, go to next level
     void CheckPins()
     {
         if (GameObject.FindGameObjectWithTag("Pin") != null)
@@ -65,8 +75,11 @@ public class GameManager : MonoBehaviour
             return;
         } else
         {
-            //no pins left, next level
+            //no pins left --> NEXT LEVEL
             Debug.Log("Next Level");
+            ballsLeft = ballsPerLevel;
         }
     }
+
+
 }
