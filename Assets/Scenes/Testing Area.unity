@@ -314,29 +314,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   follow: 1
---- !u!1 &1896854344 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 211977590211578728, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
-  m_PrefabInstance: {fileID: 211977589959964704}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1896854347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1896854344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c2875b8cba8d49ad84b35f30c6ee705, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ballsLeft: 0
-  level: 0
-  strikes: 0
-  currentStrikeCount: 0
-  bumperLives: 3
-  pinsCollected: 0
 --- !u!1001 &211977589959964704
 PrefabInstance:
   m_ObjectHideFlags: 0
