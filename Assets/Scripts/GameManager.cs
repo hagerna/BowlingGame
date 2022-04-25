@@ -77,44 +77,48 @@ public class GameManager : MonoBehaviour
     public void BallReset()
     {
         gameData["ballsLeft"]--;
-        if (gameData["ballsLeft"] == 0)
-        {
-            // go to upgrade screen
-        }
-        else
-        {
-            // Reset the player back to beginning of the stage and check pins after 3 seconds
-            LevelGenerator.instance.NewBall();
-            Invoke(nameof(CheckPins), 3f);
-        }
-    }
-
-    // Check to see if there are any pins left, if not, go to next level
-    void CheckPins()
-    {
         if (GameObject.FindGameObjectWithTag("Pin") != null)
         {
-            return;
+            LevelGenerator.instance.NewBall();
+        }
+
+    }
+
+    IEnumerator CheckPins()
+    {
+        bool pinsStanding = true;
+        while (pinsStanding)
+        {
+            if (GameObject.FindGameObjectWithTag("Pin") == null)
+            {
+                pinsStanding = false;
+            } else
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        FindObjectOfType<PlayerControls>().movementLocked = true;
+        StrikeCheck();
+        StartCoroutine(NextLevel());
+    }
+
+    void StrikeCheck()
+    {
+        if (gameData["ballsPerLevel"] - 1 == gameData["ballsLeft"])
+        {
+            //strike
+            gameData["strikes"]++;
+            gameData["strikeStreak"]++;
         }
         else
         {
-            if (gameData["ballsLeft"] == gameData["ballsPerLevel"] - 1)
-            {
-                //strike
-                gameData["strikes"]++;
-                gameData["strikeStreak"]++;
-            }
-            else if (gameData["ballsLeft"] == gameData["ballsPerLevel"] - 2)
-            {
-                //spare
-                gameData["strikeStreak"] = 0;
-            } else { gameData["strikeStreak"] = 0; }
-            StartCoroutine(NextLevel());
+            gameData["strikeStreak"] = 0;
         }
     }
 
     IEnumerator NextLevel()
     {
+        yield return new WaitForSeconds(2f); // wait for celebration graphic
         gameData["level"]++;
         gameData["ballsLeft"] = gameData["ballsPerLevel"];
         if (gameData["level"] % 5 == 0)
@@ -126,6 +130,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         LevelGenerator.instance.GenerateLevel(gameData["pinRows"], gameData["laneLength"], pinSeparation); //, laneMaterials[gameData["level"] / 10]);
+        StartCoroutine(CheckPins());
     }
 
     void LevelReset()
@@ -135,5 +140,6 @@ public class GameManager : MonoBehaviour
         pinSeparation = 1f;
         laneLength = 50f;
         LevelGenerator.instance.GenerateLevel(4, 50, 1f);
+        StartCoroutine(CheckPins());
     }
 }

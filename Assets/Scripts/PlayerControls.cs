@@ -31,6 +31,11 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
+    void Boost()
+    {
+        rb.velocity += Vector3.forward * forwardSpeed;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Pin")){
@@ -63,17 +68,20 @@ public class PlayerControls : MonoBehaviour
     {
         movementLocked = true;
         Camera.main.GetComponent<CameraFollow>().follow = false;
-        // Trigger death effect
+        StartCoroutine(PlayerDeath());
+    }
+
+    IEnumerator PlayerDeath()
+    {
+        rb.isKinematic = true;
+        GetComponent<MeshRenderer>().enabled = false;
+        //trigger particle effect
+        yield return new WaitForSeconds(1f);
         if (!resetTriggered)
         {
             GameManager.Instance.BallReset();
             resetTriggered = true;
         }
         Destroy(gameObject);
-    }
-
-    void Boost()
-    {
-        rb.velocity += Vector3.forward * forwardSpeed;
     }
 }

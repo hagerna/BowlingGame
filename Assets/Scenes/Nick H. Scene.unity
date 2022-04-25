@@ -331,6 +331,18 @@ PrefabInstance:
       value: LevelGenerator
       objectReference: {fileID: 0}
     - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: ramp
+      value: 
+      objectReference: {fileID: 853669083334989945, guid: 1a1f9067c533341d38ba7bb3fb3efdd4, type: 3}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: obstacle
+      value: 
+      objectReference: {fileID: 1138177771573307828, guid: 47c55553d23ee493a823a4255ff5995a, type: 3}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: boostGate
+      value: 
+      objectReference: {fileID: 2352314570805376892, guid: 3d12293fa4ca5447989e7341b5ff5f59, type: 3}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}

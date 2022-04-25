@@ -19,7 +19,7 @@ public class PinScript : MonoBehaviour
         {
             if (transform.up == Vector3.up) //if the pin is still standing
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.05f);
             }
             else //pin is no longer standing
             {
@@ -27,7 +27,7 @@ public class PinScript : MonoBehaviour
                 PinFallEffect();
             }
         }
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
 
