@@ -7,6 +7,7 @@ public class PlayerControls : MonoBehaviour
     public float forwardSpeed = 20;
     public float horizontalControl = 4;
     public bool movementLocked = false;
+    bool resetTriggered = false;
 
     private Rigidbody rb;
 
@@ -26,24 +27,61 @@ public class PlayerControls : MonoBehaviour
         rb.velocity += xAcceleration;
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.velocity += Vector3.forward * forwardSpeed;
+            Boost();
         }
+    }
+
+    void Boost()
+    {
+        rb.velocity += Vector3.forward * forwardSpeed;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Pin")){
             movementLocked = true;
-            Camera.main.GetComponent<CameraFollow>().follow = false;
             // Trigger explosion if explosive ball
         }
         if (collision.collider.CompareTag("Obstacle"))
         {
-            movementLocked = true;
-            //Camera.main.GetComponent<CameraFollow>().follow = false;
-            // Trigger death effect
-            GameManager.instance.BallReset();
-            Destroy(gameObject);
+            HandleObstacle();
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Boost"))
+        {
+            Boost();
+        }
+        else if (other.CompareTag("CameraStop"))
+        {
+            Camera.main.GetComponent<CameraFollow>().follow = false;
+        }
+        else if (other.CompareTag("Obstacle"))
+        {
+            HandleObstacle();
+        }
+    }
+
+    void HandleObstacle()
+    {
+        movementLocked = true;
+        Camera.main.GetComponent<CameraFollow>().follow = false;
+        StartCoroutine(PlayerDeath());
+    }
+
+    IEnumerator PlayerDeath()
+    {
+        rb.isKinematic = true;
+        GetComponent<MeshRenderer>().enabled = false;
+        //trigger particle effect
+        yield return new WaitForSeconds(1f);
+        if (!resetTriggered)
+        {
+            GameManager.Instance.BallReset();
+            resetTriggered = true;
+        }
+        Destroy(gameObject);
     }
 }

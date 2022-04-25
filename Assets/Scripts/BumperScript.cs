@@ -12,7 +12,7 @@ public class BumperScript : MonoBehaviour
 
     IEnumerator BumpersEnabled()
     {
-        while (GameManager.instance.bumperLives > 0)
+        while (GameManager.Instance.gameData["bumperLives"] > 0)
         {
             yield return new WaitForSeconds(0.1f);
         }
@@ -23,7 +23,7 @@ public class BumperScript : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            GameManager.instance.bumperLives--;
+            GameManager.Instance.gameData["bumperLives"]--;
         }
     }
 }
