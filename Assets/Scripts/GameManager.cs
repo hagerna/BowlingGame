@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
         }
-        FindObjectOfType<PlayerControls>().movementLocked = true;
+        //FindObjectOfType<PlayerControls>().movementLocked = true;
         StrikeCheck();
         StartCoroutine(NextLevel());
     }

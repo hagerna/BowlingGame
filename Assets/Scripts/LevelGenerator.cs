@@ -116,7 +116,7 @@ public class LevelGenerator : MonoBehaviour
         }
         if (level < 15)
         {
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+            spawn.x = Random.Range(-(laneWidth / 2) + 2, (laneWidth / 2) - 2);
             spawn.z = Random.Range((laneLength / 2) - 10, laneLength / 2)-1;
             Instantiate(boostGate, spawn, Quaternion.identity);
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
@@ -126,14 +126,14 @@ public class LevelGenerator : MonoBehaviour
         }
         if (level < 20)
         {
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+            spawn.x = Random.Range(-(laneWidth / 2) + 2, (laneWidth / 2) - 2);
             spawn.z = Random.Range(10, laneLength / 3);
             Instantiate(boostGate, spawn, Quaternion.identity);
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
             spawn.z = Random.Range(laneLength / 3 , 2*(laneLength / 3));
             Instantiate(obstacle, spawn, Quaternion.identity);
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range(2*(laneLength / 3), laneLength);
+            spawn.z = Random.Range(2*(laneLength / 3), laneLength-5);
             Instantiate(obstacle, spawn, Quaternion.identity);
             return;
         }
@@ -146,7 +146,7 @@ public class LevelGenerator : MonoBehaviour
             spawn.z = Random.Range(laneLength / 3, 2 * (laneLength / 3));
             Instantiate(obstacle, spawn, Quaternion.identity);
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range(2 * (laneLength / 3), laneLength);
+            spawn.z = Random.Range(2 * (laneLength / 3), laneLength-5);
             Instantiate(obstacle, spawn, Quaternion.identity);
             return;
         }
