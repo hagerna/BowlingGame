@@ -28,9 +28,10 @@ public class LevelGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (_instance != null)
+        if (_instance != null && _instance != this)
         {
-            Destroy(_instance.gameObject);
+            Destroy(gameObject);
+            return;
         }
         _instance = this;
         DontDestroyOnLoad(_instance);
@@ -41,16 +42,16 @@ public class LevelGenerator : MonoBehaviour
                 //laneLength --> how long the lane is
                 //pinSeparation --> distance between pins
                 //laneColor --> what color the lane is
-    public void GenerateLevel(int pinRows, float laneLength, float pinSeparation, Material laneColor = null)
+    public void GenerateLevel(int pinRows, float laneLength, float pinSeparation, float Offset = 0f, Material laneColor = null)
     {
         Vector3 lanePosition = new Vector3(0, 0, (laneLength / 2f) - 5f);
         GameObject newLane = Instantiate(lane, lanePosition, Quaternion.identity);
-        newLane.transform.localScale = new Vector3(pinRows, 1, laneLength);
+        newLane.transform.localScale = new Vector3(pinRows + Offset, 1, laneLength);
         if (laneColor)
         {
             lane.GetComponent<Renderer>().material = laneColor;
         }
-        Vector3 firstPin = new Vector3(0, 1, laneLength - (pinRows * pinSeparation + 5.5f));
+        Vector3 firstPin = new Vector3(Offset, 1, laneLength - (pinRows * pinSeparation + 5.5f));
         GeneratePins(pinRows, firstPin, pinSeparation);
         Instantiate(ball, Vector3.up, Quaternion.LookRotation(Vector3.right));
         //GenerateObstacles() --> potential function?

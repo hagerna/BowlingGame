@@ -7,6 +7,7 @@ public class PlayerControls : MonoBehaviour
     public float forwardSpeed = 20;
     public float horizontalControl = 4;
     public bool movementLocked = false;
+    bool resetTriggered = false;
 
     private Rigidbody rb;
 
@@ -63,7 +64,11 @@ public class PlayerControls : MonoBehaviour
         movementLocked = true;
         Camera.main.GetComponent<CameraFollow>().follow = false;
         // Trigger death effect
-        GameManager.Instance.BallReset();
+        if (!resetTriggered)
+        {
+            GameManager.Instance.BallReset();
+            resetTriggered = true;
+        }
         Destroy(gameObject);
     }
 

@@ -101,27 +101,30 @@ public class GameManager : MonoBehaviour
             if (gameData["ballsLeft"] == gameData["ballsPerLevel"] - 1)
             {
                 //strike
+                gameData["strikes"]++;
+                gameData["strikeStreak"]++;
             }
             else if (gameData["ballsLeft"] == gameData["ballsPerLevel"] - 2)
             {
                 //spare
-            }
-            Debug.Log("Next Level");
-            NextLevel();
-            gameData["ballsLeft"] = gameData["ballsPerLevel"];
+                gameData["strikeStreak"] = 0;
+            } else { gameData["strikeStreak"] = 0; }
+            StartCoroutine(NextLevel());
         }
     }
 
-    void NextLevel()
+    IEnumerator NextLevel()
     {
         gameData["level"]++;
-        Debug.Log(gameData["level"]);
+        gameData["ballsLeft"] = gameData["ballsPerLevel"];
         if (gameData["level"] % 5 == 0)
         {
             gameData["pinRows"]++;
             gameData["laneLength"]+=5;
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
         LevelGenerator.instance.GenerateLevel(gameData["pinRows"], gameData["laneLength"], pinSeparation); //, laneMaterials[gameData["level"] / 10]);
     }
 
