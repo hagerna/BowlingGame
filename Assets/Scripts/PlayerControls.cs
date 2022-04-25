@@ -26,7 +26,7 @@ public class PlayerControls : MonoBehaviour
         rb.velocity += xAcceleration;
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.velocity += Vector3.forward * forwardSpeed;
+            Boost();
         }
     }
 
@@ -34,16 +34,41 @@ public class PlayerControls : MonoBehaviour
     {
         if (collision.collider.CompareTag("Pin")){
             movementLocked = true;
-            Camera.main.GetComponent<CameraFollow>().follow = false;
             // Trigger explosion if explosive ball
         }
         if (collision.collider.CompareTag("Obstacle"))
         {
-            movementLocked = true;
-            //Camera.main.GetComponent<CameraFollow>().follow = false;
-            // Trigger death effect
-            GameManager.instance.BallReset();
-            Destroy(gameObject);
+            HandleObstacle();
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Boost"))
+        {
+            Boost();
+        }
+        else if (other.CompareTag("CameraStop"))
+        {
+            Camera.main.GetComponent<CameraFollow>().follow = false;
+        }
+        else if (other.CompareTag("Obstacle"))
+        {
+            HandleObstacle();
+        }
+    }
+
+    void HandleObstacle()
+    {
+        movementLocked = true;
+        Camera.main.GetComponent<CameraFollow>().follow = false;
+        // Trigger death effect
+        GameManager.Instance.BallReset();
+        Destroy(gameObject);
+    }
+
+    void Boost()
+    {
+        rb.velocity += Vector3.forward * forwardSpeed;
     }
 }

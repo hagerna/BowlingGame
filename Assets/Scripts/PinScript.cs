@@ -34,6 +34,6 @@ public class PinScript : MonoBehaviour
     void PinFallEffect()
     {
         //Update pin counter
-        GameManager.instance.pinsCollected++;
+        GameManager.Instance.pinsCollected++;
     }
 }

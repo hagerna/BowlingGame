@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public bool generateOnStart;
     public GameObject lane;
     public GameObject pin;
     public GameObject ball;
-
-    public float pinSeparation = 1f;
-    public int playtestRows;
 
     private static LevelGenerator _instance;
     public static LevelGenerator instance
@@ -38,16 +34,14 @@ public class LevelGenerator : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(_instance);
-        if (generateOnStart)
-        {
-            GenerateLevel(playtestRows, 50, 0);
-        }
     }
 
     //Generate Level by instantiating lane, pins, and bowling ball (obstacles not implemented yet)
     //PARAMETERS: pinRows --> passed to Generate pins (see 'rows' parameter)
-                //laneLength --> 
-    public void GenerateLevel(int pinRows, float laneLength, float pinOffset, Material laneColor = null)
+                //laneLength --> how long the lane is
+                //pinSeparation --> distance between pins
+                //laneColor --> what color the lane is
+    public void GenerateLevel(int pinRows, float laneLength, float pinSeparation, Material laneColor = null)
     {
         Vector3 lanePosition = new Vector3(0, 0, (laneLength / 2f) - 5f);
         GameObject newLane = Instantiate(lane, lanePosition, Quaternion.identity);
@@ -56,8 +50,8 @@ public class LevelGenerator : MonoBehaviour
         {
             lane.GetComponent<Renderer>().material = laneColor;
         }
-        Vector3 firstPin = new Vector3(pinOffset, 1, laneLength - (pinRows * pinSeparation + 5.5f));
-        GeneratePins(pinRows, firstPin);
+        Vector3 firstPin = new Vector3(0, 1, laneLength - (pinRows * pinSeparation + 5.5f));
+        GeneratePins(pinRows, firstPin, pinSeparation);
         Instantiate(ball, Vector3.up, Quaternion.LookRotation(Vector3.right));
         //GenerateObstacles() --> potential function?
 
@@ -66,18 +60,18 @@ public class LevelGenerator : MonoBehaviour
     //public function to be called on at level generation
     //PARAMETERS: rows --> number of rows of pins (increase with difficulty),
                 //pinPosition --> position of first pin at top of triangle (based on lane length)
-    public void GeneratePins(int rows, Vector3 pinPosition)
+    public void GeneratePins(int rows, Vector3 pinPosition, float pinSeparation)
     {
         for (int rowSize = 1; rowSize < rows + 1; rowSize++)
         {
-            makeRow(rowSize, pinPosition);
+            makeRow(rowSize, pinPosition, pinSeparation);
             pinPosition.z += pinSeparation;
             pinPosition.x += pinSeparation / 2f;
         }
     }
 
     //Helper function for GeneratePins
-    void makeRow(int pinsPerRow, Vector3 pinPosition)
+    void makeRow(int pinsPerRow, Vector3 pinPosition, float pinSeparation)
     {
         for (int pins = 0; pins < pinsPerRow; pins++)
         {
