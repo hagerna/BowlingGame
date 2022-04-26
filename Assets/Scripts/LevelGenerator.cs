@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public GameObject lane, pin, ball, obstacle, boostGate, ramp;
-    int[] worlds;
+    public GameObject pin, ball, boostGate, ramp;
+    public GameObject[] lanes;
+    public GameObject[] obstacles;
+    int currentWorld;
 
     private static LevelGenerator _instance;
     public static LevelGenerator instance
@@ -34,7 +36,7 @@ public class LevelGenerator : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(_instance);
-        worlds = 0;
+        currentWorld = 0;
     }
 
     //Generate Level by instantiating lane, pins, and bowling ball (obstacles not implemented yet)
@@ -42,14 +44,14 @@ public class LevelGenerator : MonoBehaviour
                 //laneLength --> how long the lane is
                 //pinSeparation --> distance between pins
                 //laneColor --> what color the lane is
-    public void GenerateLevel(int pinRows, float laneLength, float pinSeparation, float Offset = 0f, Material laneColor = null)
+    public void GenerateLevel(int pinRows, float laneLength, float pinSeparation, float Offset = 0f)
     {
+        CheckWorld();
         Vector3 lanePosition = new Vector3(0, 0, (laneLength / 2f) - 5f);
-        GameObject newLane = Instantiate(lane, lanePosition, Quaternion.identity);
-        newLane.transform.localScale = new Vector3(pinRows + Offset, 1, laneLength);
-        if (laneColor)
+        GameObject newLane = Instantiate(lanes[currentWorld], lanePosition, Quaternion.identity);
+        if (currentWorld != 1)
         {
-            lane.GetComponent<Renderer>().material = laneColor;
+            newLane.transform.localScale = new Vector3(pinRows + Offset, 1, laneLength);
         }
         Vector3 firstPin = new Vector3(Offset, 1, laneLength - (pinRows * pinSeparation + 5.5f));
         GeneratePins(pinRows, firstPin, pinSeparation);
@@ -57,9 +59,18 @@ public class LevelGenerator : MonoBehaviour
         GenerateObstacles(pinRows + Offset, firstPin.z);
     }
 
+    void CheckWorld()
+    {
+        if (GameManager.Instance.gameData["level"] % 20 != 0)
+        {
+            return;
+        }
+
+    }
+
     //public function to be called on at level generation
     //PARAMETERS: rows --> number of rows of pins (increase with difficulty),
-                //pinPosition --> position of first pin at top of triangle (based on lane length)
+    //pinPosition --> position of first pin at top of triangle (based on lane length)
     void GeneratePins(int rows, Vector3 pinPosition, float pinSeparation)
     {
         for (int rowSize = 1; rowSize < rows + 1; rowSize++)
@@ -89,66 +100,29 @@ public class LevelGenerator : MonoBehaviour
     void GenerateObstacles(float laneWidth, float laneLength)
     {
         int level = GameManager.Instance.gameData["level"];
-        Vector3 spawn = Vector3.up;
-        if (level == 1)
+        switch (currentWorld)
         {
-            return;
-        }
-        if (level < 5)
-        {
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range((laneLength / 2) - 10, (laneLength / 2) + 10);
-            Instantiate(obstacle, spawn, Quaternion.identity);
-            return;
-        }
-        if (level < 10)
-        {
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range((laneLength / 2) - 10, laneLength / 2)-1;
-            Instantiate(obstacle, spawn, Quaternion.identity);
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range((laneLength / 2)+1, laneLength / 2)+10;
-            Instantiate(obstacle, spawn, Quaternion.identity);
-            return;
+            case 1:
+                GenerateWorld1Level(level, laneWidth, laneLength);
+                break;
+            case 2:
+                //GenerateWorld2Level(level, laneWidth, laneLength);
+                break;
+            case 3:
+                //GenerateWorld3Level(level, laneWidth, laneLength);
+                break;
+            case 4:
+                //GenerateWorld4Level(level, laneWidth, laneLength);
+                break;
+            default:
+                GenerateWorld0Level(level, laneWidth, laneLength);
+                break;
 
         }
-        if (level == 10)
-        {
-            return;
-        }
-        if (level < 15)
-        {
-            spawn.x = Random.Range(-(laneWidth / 2) + 2, (laneWidth / 2) - 2);
-            spawn.z = Random.Range((laneLength / 2) - 10, laneLength / 2)-1;
-            Instantiate(boostGate, spawn, Quaternion.identity);
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range((laneLength / 2)+1, laneLength / 2) + 10;
-            Instantiate(obstacle, spawn, Quaternion.identity);
-            return;
-        }
-        if (level < 20)
-        {
-            spawn.x = Random.Range(-(laneWidth / 2) + 2, (laneWidth / 2) - 2);
-            spawn.z = Random.Range(10, laneLength / 3);
-            Instantiate(boostGate, spawn, Quaternion.identity);
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range(laneLength / 3 , 2*(laneLength / 3));
-            Instantiate(obstacle, spawn, Quaternion.identity);
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range(2*(laneLength / 3), laneLength-5);
-            Instantiate(obstacle, spawn, Quaternion.identity);
-            return;
-        }
-        if (level%20 == 0)
-        {
-
-        }
-        //pick a world for the next 20 levels
-        //on GenerateLevel --> Generate a level for that world
 
     }
 
-    void GenerateWorld1Level(int level, float laneWidth, float laneLength)
+    void GenerateWorld0Level(int level, float laneWidth, float laneLength)
     {
         level = level % 20;
         Vector3 spawn = Vector3.up;
@@ -156,17 +130,17 @@ public class LevelGenerator : MonoBehaviour
         {
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
             spawn.z = Random.Range((laneLength / 2) - 10, (laneLength / 2) + 10);
-            Instantiate(obstacle, spawn, Quaternion.identity);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
             return;
         }
         if (level < 10)
         {
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
             spawn.z = Random.Range((laneLength / 2) - 10, laneLength / 2) - 1;
-            Instantiate(obstacle, spawn, Quaternion.identity);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
             spawn.z = Random.Range((laneLength / 2) + 1, laneLength / 2) + 10;
-            Instantiate(obstacle, spawn, Quaternion.identity);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
             return;
 
         }
@@ -181,7 +155,7 @@ public class LevelGenerator : MonoBehaviour
             Instantiate(boostGate, spawn, Quaternion.identity);
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
             spawn.z = Random.Range((laneLength / 2) + 1, laneLength / 2) + 10;
-            Instantiate(obstacle, spawn, Quaternion.identity);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
             return;
         }
         if (level < 20)
@@ -191,15 +165,15 @@ public class LevelGenerator : MonoBehaviour
             Instantiate(boostGate, spawn, Quaternion.identity);
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
             spawn.z = Random.Range(laneLength / 3, 2 * (laneLength / 3));
-            Instantiate(obstacle, spawn, Quaternion.identity);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
             spawn.z = Random.Range(2 * (laneLength / 3), laneLength - 5);
-            Instantiate(obstacle, spawn, Quaternion.identity);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
             return;
         }
     }
 
-    void GenerateWorld2Level(int level, float laneWidth, float laneLength)
+    void GenerateWorld1Level(int level, float laneWidth, float laneLength)
     {
 
     }

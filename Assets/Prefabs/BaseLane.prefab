@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 4767239208570625964}
   - component: {fileID: 4767239208570625965}
   m_Layer: 0
-  m_Name: TestLane
+  m_Name: BaseLane
   m_TagString: Lane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
