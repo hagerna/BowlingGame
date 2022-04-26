@@ -145,5 +145,7 @@ public class TouchControls : MonoBehaviour
             resetTriggered = true;
         }
         Destroy(gameObject);
+
+        GameManager.Instance.baseData["ballsPerLevel"]++;
     }
 }
