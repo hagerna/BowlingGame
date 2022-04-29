@@ -36,4 +36,15 @@ public class PinScript : MonoBehaviour
         //Update pin counter
         GameManager.Instance.pinsCollected++;
     }
+
+    public void Explode(Vector3 origin)
+    {
+        GetComponent<Rigidbody>().AddExplosionForce(10, origin, 2, 5);
+    }
+
+    public void Blackhole(Vector3 origin)
+    {
+        Vector3.RotateTowards(transform.rotation.eulerAngles, origin, 6.28f, 1f);
+        GetComponent<Rigidbody>().AddForce(transform.forward * 5);
+    }
 }

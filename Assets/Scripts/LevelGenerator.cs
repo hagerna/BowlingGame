@@ -8,6 +8,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject[] lanes;
     public GameObject[] obstacles;
     int currentWorld;
+    bool[] worldsCompleted;
 
     private static LevelGenerator _instance;
     public static LevelGenerator instance
@@ -59,13 +60,23 @@ public class LevelGenerator : MonoBehaviour
         GenerateObstacles(pinRows + Offset, firstPin.z);
     }
 
+    //Every twenty levels pick a new world, one that the player has not played already, resetting if they have played them all
     void CheckWorld()
     {
         if (GameManager.Instance.gameData["level"] % 20 != 0)
         {
             return;
         }
-
+        if (worldsCompleted.Length == 4) // doesn't work right
+        {
+            worldsCompleted = null;
+        }
+        currentWorld = Random.Range(1, 5);
+        while (worldsCompleted[currentWorld])
+        {
+            currentWorld = Random.Range(1, 5);
+        }
+        worldsCompleted[currentWorld] = true;
     }
 
     //public function to be called on at level generation
@@ -100,8 +111,15 @@ public class LevelGenerator : MonoBehaviour
     void GenerateObstacles(float laneWidth, float laneLength)
     {
         int level = GameManager.Instance.gameData["level"];
+        if (level == 1)
+        {
+            return;
+        }
         switch (currentWorld)
         {
+            case 0:
+                GenerateWorld0Level(level, laneWidth, laneLength);
+                break;
             case 1:
                 GenerateWorld1Level(level, laneWidth, laneLength);
                 break;
@@ -115,13 +133,14 @@ public class LevelGenerator : MonoBehaviour
                 //GenerateWorld4Level(level, laneWidth, laneLength);
                 break;
             default:
-                GenerateWorld0Level(level, laneWidth, laneLength);
+                Debug.Log("Error on GenerateObstacles() --> switch failed");
                 break;
 
         }
 
     }
 
+    // World 0 is the basic world, player will always go through variation of same 20 levels to start
     void GenerateWorld0Level(int level, float laneWidth, float laneLength)
     {
         level = level % 20;

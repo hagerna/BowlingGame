@@ -333,7 +333,7 @@ PrefabInstance:
     - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
       propertyPath: ball
       value: 
-      objectReference: {fileID: 2800437294105566993, guid: 514b1782b3ca94476a505623023cddf1, type: 3}
+      objectReference: {fileID: 2800437294105566993, guid: 739c428b30ad0400d818569e4d082ab2, type: 3}
     - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
       propertyPath: ramp
       value: 
@@ -358,6 +358,26 @@ PrefabInstance:
       propertyPath: generateOnStart
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: lanes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: lanes.Array.data[0]
+      value: 
+      objectReference: {fileID: 4767239208570625954, guid: bbe19c94e7cdc44f8aa8e025ddcbf6d9, type: 3}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: lanes.Array.data[1]
+      value: 
+      objectReference: {fileID: 4767239208570625954, guid: 408cf750a5c7f4db1ba391cc30c3fc6f, type: 3}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: obstacles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: obstacles.Array.data[0]
+      value: 
+      objectReference: {fileID: 1138177771573307828, guid: 47c55553d23ee493a823a4255ff5995a, type: 3}
     - target: {fileID: 211977590211578730, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
       propertyPath: m_RootOrder
       value: 1

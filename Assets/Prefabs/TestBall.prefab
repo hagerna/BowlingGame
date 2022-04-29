@@ -129,6 +129,10 @@ MonoBehaviour:
   forwardSpeed: 10
   horizontalControl: 5
   movementLocked: 0
+  explosion: 1
+  gold: 0
+  blackhole: 0
+  ghost: 0
 --- !u!114 &-9101435483345588464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,3 +149,7 @@ MonoBehaviour:
   horizontalControl: 4
   movementLocked: 1
   initialLaunch: 1
+  explosion: 0
+  gold: 0
+  blackhole: 0
+  ghost: 0

@@ -9,6 +9,8 @@ public class PlayerControls : MonoBehaviour
     public bool movementLocked = false;
     bool resetTriggered = false;
 
+    public bool explosion, gold, blackhole, ghost;
+
     private Rigidbody rb;
 
     void Start()
@@ -38,13 +40,29 @@ public class PlayerControls : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Pin")){
+        if (collision.collider.CompareTag("Pin")) {
             movementLocked = true;
-            // Trigger explosion if explosive ball
+            if (explosion || blackhole)
+            {
+                HandleImpactEffect();
+            }
         }
         if (collision.collider.CompareTag("Obstacle"))
         {
             HandleObstacle();
+        }
+    }
+
+    void HandleImpactEffect()
+    {
+        Collider[] pins = Physics.OverlapSphere(transform.position, 2f);
+        for (int pin = 0; pin < pins.Length; pin++)
+        {
+            if (pins[pin].CompareTag("Pin"))
+            {
+                if (explosion) { pins[pin].GetComponent<PinScript>().Explode(transform.position); }
+                if (explosion) { pins[pin].GetComponent<PinScript>().Blackhole(transform.position); }
+            }
         }
     }
 
