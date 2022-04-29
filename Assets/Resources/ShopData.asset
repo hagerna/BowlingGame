@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77b5529949f824ce1a065e37f285b940, type: 3}
+  m_Name: ShopData
+  m_EditorClassIdentifier: 
+  shopItems:
+  - itemName: Control Upgrade
+    isUnlocked: 1
+    unlockCost: 0
+    ballUpgrades:
+    - unlockCost: 10
+      control: 100
+      speed: 0
+      bumperNumber: 0
+    - unlockCost: 20
+      control: 200
+      speed: 0
+      bumperNumber: 0
+    - unlockCost: 30
+      control: 300
+      speed: 0
+      bumperNumber: 0
+    - unlockCost: 40
+      control: 400
+      speed: 0
+      bumperNumber: 0
+    - unlockCost: 50
+      control: 500
+      speed: 0
+      bumperNumber: 0
+  - itemName: Speed Upgrade
+    isUnlocked: 0
+    unlockCost: 0
+    ballUpgrades:
+    - unlockCost: 10
+      control: 0
+      speed: 100
+      bumperNumber: 0
+    - unlockCost: 20
+      control: 0
+      speed: 200
+      bumperNumber: 0
+    - unlockCost: 30
+      control: 0
+      speed: 300
+      bumperNumber: 0
+    - unlockCost: 40
+      control: 400
+      speed: 0
+      bumperNumber: 0
+    - unlockCost: 50
+      control: 500
+      speed: 0
+      bumperNumber: 0
