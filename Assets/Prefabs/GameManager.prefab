@@ -47,3 +47,4 @@ MonoBehaviour:
   pinsCollected: 0
   pinSeparation: 0
   laneLength: 0
+  currentBall: basic

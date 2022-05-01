@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Dictionary<string, int> baseData = new Dictionary<string, int>();
     public Material[] laneMaterials;
     public float pinsCollected, pinSeparation, laneLength;
+    public string currentBall; //types: basic, fire, gold, ghost, vortex
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -98,13 +99,12 @@ public class GameManager : MonoBehaviour
             }
         }
         //FindObjectOfType<PlayerControls>().movementLocked = true;
-        StrikeCheck();
         StartCoroutine(NextLevel());
     }
 
     void StrikeCheck()
     {
-        if (gameData["ballsPerLevel"] - 1 == gameData["ballsLeft"])
+        if (gameData["ballsPerLevel"] - 1 == gameData["ballsLeft"] || gameData["ballsPerLevel"] == gameData["ballsLeft"])
         {
             //strike
             gameData["strikes"]++;
@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator NextLevel()
     {
+        StrikeCheck();
         yield return new WaitForSeconds(2f); // wait for celebration graphic
         gameData["level"]++;
         gameData["ballsLeft"] = gameData["ballsPerLevel"];

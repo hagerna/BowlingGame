@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public GameObject pin, ball, boostGate, ramp;
+    public GameObject pin, boostGate, ramp;
     public GameObject[] lanes;
     public GameObject[] obstacles;
+    public GameObject[] ballPrefabs;
     int currentWorld;
     bool[] worldsCompleted;
+
+    GameObject ball;
 
     private static LevelGenerator _instance;
     public static LevelGenerator instance
@@ -56,7 +59,7 @@ public class LevelGenerator : MonoBehaviour
         }
         Vector3 firstPin = new Vector3(Offset, 1, laneLength - (pinRows * pinSeparation + 5.5f));
         GeneratePins(pinRows, firstPin, pinSeparation);
-        Instantiate(ball, Vector3.up, Quaternion.LookRotation(Vector3.right));
+        ChooseBall();
         GenerateObstacles(pinRows + Offset, firstPin.z);
     }
 
@@ -106,6 +109,34 @@ public class LevelGenerator : MonoBehaviour
     void SelectPin(Vector3 position)
     {
         Instantiate(pin, position, Quaternion.identity);
+    }
+
+    //Determine which ball prefab to Instantiate
+    void ChooseBall()
+    {
+        switch (GameManager.Instance.currentBall)
+        {
+            case "basic":
+                ball = ballPrefabs[0];
+                break;
+            case "fire":
+                ball = ballPrefabs[1];
+                break;
+            case "gold":
+                ball = ballPrefabs[2];
+                break;
+            case "ghost":
+                ball = ballPrefabs[3];
+                break;
+            case "vortex":
+                ball = ballPrefabs[4];
+                break;
+            default:
+                ball = null;
+                Debug.Log("error in ChooseBall(), ball type not found");
+                break;
+        }
+        Instantiate(ball, Vector3.up, Quaternion.LookRotation(Vector3.right));
     }
 
     void GenerateObstacles(float laneWidth, float laneLength)

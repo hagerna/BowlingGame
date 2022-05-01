@@ -35,16 +35,30 @@ public class PinScript : MonoBehaviour
     {
         //Update pin counter
         GameManager.Instance.pinsCollected++;
+        if (GameManager.Instance.currentBall == "gold")
+        {
+            GameManager.Instance.pinsCollected++;
+        }
     }
 
     public void Explode(Vector3 origin)
     {
-        GetComponent<Rigidbody>().AddExplosionForce(10, origin, 2, 5);
+        GetComponent<Rigidbody>().AddExplosionForce(100, origin, 3);
     }
 
     public void Blackhole(Vector3 origin)
     {
-        Vector3.RotateTowards(transform.rotation.eulerAngles, origin, 6.28f, 1f);
-        GetComponent<Rigidbody>().AddForce(transform.forward * 5);
+        Vector3 direction = origin - transform.position;
+        StartCoroutine(PushPull(direction));
+    }
+
+    IEnumerator PushPull(Vector3 direction)
+    {
+        float distance = direction.magnitude;
+        GetComponent<Rigidbody>().AddForce(-direction * (20 / distance * distance), ForceMode.Acceleration);
+        yield return new WaitForSeconds(0.3f);
+        GetComponent<Rigidbody>().AddForce(direction * (120 / distance * distance), ForceMode.Acceleration);
+        yield return new WaitForSeconds(0.3f);
+        GetComponent<Rigidbody>().AddForce(Vector3.up * 0.5f, ForceMode.Impulse);
     }
 }

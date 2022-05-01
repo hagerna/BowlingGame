@@ -8,8 +8,11 @@ public class PlayerControls : MonoBehaviour
     public float horizontalControl = 4;
     public bool movementLocked = false;
     bool resetTriggered = false;
+    bool initialBoost = true;
 
-    public bool explosion, gold, blackhole, ghost;
+    public bool explosion, gold, ghost, blackhole;
+    public ParticleSystem impactEffect, deathEffect;
+    public Material ghostRegular, ghostFade;
 
     private Rigidbody rb;
 
@@ -27,15 +30,38 @@ public class PlayerControls : MonoBehaviour
         float moveLeftRight = Input.GetAxis("Horizontal");
         Vector3 xAcceleration = Vector3.right * moveLeftRight * Time.deltaTime * horizontalControl;
         rb.velocity += xAcceleration;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && initialBoost)
         {
             Boost();
+            initialBoost = false;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && ghost)
+        {
+            StartCoroutine(GhostMode());
+        }
+        if (rb.velocity.z < 0.25f && !initialBoost)
+        {
+            HandleObstacle();
         }
     }
 
     void Boost()
     {
         rb.velocity += Vector3.forward * forwardSpeed;
+    }
+
+    IEnumerator GhostMode()
+    {
+        Debug.Log("Danny Phantom!");
+        ghost = false;
+        rb.useGravity = false;
+        GetComponent<Collider>().enabled = false;
+        GetComponent<Renderer>().material = ghostFade;
+        //change material
+        yield return new WaitForSeconds(1.5f);
+        rb.useGravity = true;
+        GetComponent<Collider>().enabled = true;
+        GetComponent<Renderer>().material = ghostRegular;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -55,15 +81,23 @@ public class PlayerControls : MonoBehaviour
 
     void HandleImpactEffect()
     {
-        Collider[] pins = Physics.OverlapSphere(transform.position, 2f);
+        Collider[] pins = Physics.OverlapSphere(transform.position, 5f);
+        Instantiate(impactEffect, transform.position, Quaternion.identity);
         for (int pin = 0; pin < pins.Length; pin++)
         {
             if (pins[pin].CompareTag("Pin"))
             {
-                if (explosion) { pins[pin].GetComponent<PinScript>().Explode(transform.position); }
-                if (explosion) { pins[pin].GetComponent<PinScript>().Blackhole(transform.position); }
+                if (explosion) {
+                    pins[pin].GetComponent<PinScript>().Explode(transform.position);
+                }
+                else if (blackhole) {
+                    pins[pin].GetComponent<PinScript>().Blackhole(transform.position);
+                }
             }
         }
+        explosion = false;
+        blackhole = false;
+        //HandleObstacle();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -93,8 +127,8 @@ public class PlayerControls : MonoBehaviour
     {
         rb.isKinematic = true;
         GetComponent<MeshRenderer>().enabled = false;
-        //trigger particle effect
-        yield return new WaitForSeconds(1f);
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.35f);
         if (!resetTriggered)
         {
             GameManager.Instance.BallReset();
