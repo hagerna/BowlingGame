@@ -52,7 +52,6 @@ public class PlayerControls : MonoBehaviour
 
     IEnumerator GhostMode()
     {
-        Debug.Log("Danny Phantom!");
         ghost = false;
         rb.useGravity = false;
         GetComponent<Collider>().enabled = false;

@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour
     //Public Variables to be accessed by other scripts:
     public Dictionary<string, int> gameData = new Dictionary<string, int>();
     public Dictionary<string, int> baseData = new Dictionary<string, int>();
-    public Material[] laneMaterials;
-    public float pinsCollected, pinSeparation, laneLength;
+    public float pinsCollected, pinSeparation, laneLength, totalScore;
     public string currentBall; //types: basic, fire, gold, ghost, vortex
+    public GameObject scoreScreenUI;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -68,17 +68,12 @@ public class GameManager : MonoBehaviour
         laneLength = 50f;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     // When the player falls of the sides, hits an obstacle, or reaches the end of the lane
     public void BallReset()
     {
         gameData["ballsLeft"]--;
-        if (GameObject.FindGameObjectWithTag("Pin") != null)
+        if (GameObject.FindGameObjectWithTag("Pin") != null && gameData["ballsLeft"] > 0)
         {
             LevelGenerator.instance.NewBall();
         }
@@ -96,6 +91,19 @@ public class GameManager : MonoBehaviour
             } else
             {
                 yield return new WaitForSeconds(0.1f);
+                if (gameData["ballsLeft"] == 0)
+                {
+                    yield return new WaitForSeconds(2f);
+                    if (GameObject.FindGameObjectWithTag("Pin") == null)
+                    {
+                        pinsStanding = false;
+                    }
+                    else
+                    {
+                        Instantiate(scoreScreenUI, transform);
+                        yield break;
+                    }
+                }
             }
         }
         //FindObjectOfType<PlayerControls>().movementLocked = true;
@@ -142,5 +150,11 @@ public class GameManager : MonoBehaviour
         laneLength = 50f;
         LevelGenerator.instance.GenerateLevel(4, 50, 1f);
         StartCoroutine(CheckPins());
+    }
+
+    public float TotalScore()
+    {
+        totalScore = pinsCollected + (gameData["strikes"] * 10);
+        return totalScore;
     }
 }

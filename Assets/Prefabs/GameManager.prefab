@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c2875b8cba8d49ad84b35f30c6ee705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laneMaterials: []
   pinsCollected: 0
   pinSeparation: 0
   laneLength: 0
   currentBall: basic
+  scoreScreenUI: {fileID: 8206827534491170010, guid: d56fc22b32d094ea6bb161ee75b3300f, type: 3}
