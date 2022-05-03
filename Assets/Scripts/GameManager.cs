@@ -142,9 +142,10 @@ public class GameManager : MonoBehaviour
         StartCoroutine(CheckPins());
     }
 
-    void LevelReset()
+    public void LevelReset()
     {
         gameData = baseData;
+        Debug.Log(gameData["level"]);
         pinsCollected = 0;
         pinSeparation = 1f;
         laneLength = 50f;

@@ -26,7 +26,7 @@ public class ScoreDisplay : MonoBehaviour
     {
         pinsHit.text = "Total Pins Hit: " + GameManager.Instance.pinsCollected;
         float strikePoints = GameManager.Instance.gameData["strikes"] * 10;
-        strikes.text = "Points from Total Strikes: " + strikePoints;
+        strikes.text = "Points from Strikes: " + strikePoints;
         totalScore.text = "Total Score: " + GameManager.Instance.TotalScore();
         pinsHit.CrossFadeAlpha(1, 1, true);
         yield return new WaitForSeconds(0.5f);
@@ -40,5 +40,6 @@ public class ScoreDisplay : MonoBehaviour
         Debug.Log("Change to Upgrades scene");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Destroy(gameObject);
+        GameManager.Instance.LevelReset();
     }
 }

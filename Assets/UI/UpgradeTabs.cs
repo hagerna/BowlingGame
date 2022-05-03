@@ -28,12 +28,8 @@ public class UpgradeTabs : MonoBehaviour
                 currentTab = tabs[1];
                 currentTab.SetActive(true);
                 break;
-            case "pins":
-                currentTab = tabs[2];
-                currentTab.SetActive(true);
-                break;
             case "settings":
-                currentTab = tabs[3];
+                currentTab = tabs[2];
                 currentTab.SetActive(true);
                 break;
             default:
