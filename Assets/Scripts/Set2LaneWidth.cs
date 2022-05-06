@@ -8,6 +8,6 @@ public class Set2LaneWidth : MonoBehaviour
     void Start()
     {
         //sets a game objects width to be equal to the width of the lane
-        transform.localScale = new Vector3(GameManager.Instance.gameData["pinRows"] + GameManager.Instance.pinSeparation, 1, 1);
+        transform.localScale = new Vector3(GameManager.Instance.gameData["pinRows"] + GameManager.Instance.pinSeparation, 1, transform.localScale.z);
     }
 }
