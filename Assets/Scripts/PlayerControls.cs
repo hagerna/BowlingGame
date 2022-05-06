@@ -105,6 +105,10 @@ public class PlayerControls : MonoBehaviour
         {
             Boost();
         }
+        else if (other.CompareTag("Lock"))
+            {
+                movementLocked = true;
+            }
         else if (other.CompareTag("CameraStop"))
         {
             Camera.main.GetComponent<CameraFollow>().follow = false;

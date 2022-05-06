@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     //Public Variables to be accessed by other scripts:
     public Dictionary<string, int> gameData = new Dictionary<string, int>();
     public Dictionary<string, int> baseData = new Dictionary<string, int>();
-    public float pinsCollected, pinSeparation, laneLength, totalScore;
+    public float pinsCollected, pinSeparation, totalScore;
     public string currentBall; //types: basic, fire, gold, ghost, vortex
     public GameObject scoreScreenUI;
 
@@ -65,7 +65,6 @@ public class GameManager : MonoBehaviour
         baseData["laneLength"] = 50;
         pinsCollected = 0;
         pinSeparation = 1f;
-        laneLength = 50f;
     }
 
     void BaseToGameData()
@@ -139,7 +138,6 @@ public class GameManager : MonoBehaviour
     {
         if (StrikeCheck() && gameData["level"] != 0)
         {
-            Debug.Log("Wait");
             yield return new WaitForSeconds(2f); // wait for celebration graphic
         }
         gameData["level"]++;
@@ -161,13 +159,12 @@ public class GameManager : MonoBehaviour
         BaseToGameData();
         pinsCollected = 0;
         pinSeparation = 1f;
-        laneLength = 50f;
         StartCoroutine(NextLevel());
     }
 
     public float TotalScore()
     {
-        totalScore = pinsCollected + (gameData["strikes"] * 10);
+        totalScore += pinsCollected + (gameData["strikes"] * 10);
         return totalScore;
     }
 }
