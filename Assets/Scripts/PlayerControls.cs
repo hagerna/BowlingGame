@@ -47,7 +47,7 @@ public class PlayerControls : MonoBehaviour
 
     void Boost()
     {
-        rb.velocity += transform.forward * forwardSpeed;
+        rb.velocity += Vector3.forward * forwardSpeed;
     }
 
     IEnumerator GhostMode()
