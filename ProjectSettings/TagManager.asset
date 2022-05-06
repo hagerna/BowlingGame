@@ -9,6 +9,7 @@ TagManager:
   - Lane
   - Boost
   - CameraStop
+  - Lock
   layers:
   - Default
   - TransparentFX
