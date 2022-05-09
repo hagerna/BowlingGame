@@ -204,18 +204,18 @@ public class LevelGenerator : MonoBehaviour
         Vector3 spawn = Vector3.up;
         if (level < 5)
         {
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range((laneLength / 2) - 10, (laneLength / 2) + 10);
+            spawn.x = Random.Range(-1.5f, 1.5f);
+            spawn.z = Random.Range(5, 25);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
             return;
         }
         if (level < 10)
         {
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range((laneLength / 2) - 10, laneLength / 2) - 1;
+            spawn.x = Random.Range(-1.5f, 1.5f);
+            spawn.z = Random.Range(5, 25);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range((laneLength / 2) + 1, laneLength / 2) + 10;
+            spawn.x = Random.Range(-1.5f, 1.5f);
+            spawn.z = Random.Range(125, 140);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
             return;
 
@@ -226,12 +226,25 @@ public class LevelGenerator : MonoBehaviour
         }
         if (level < 15)
         {
-            spawn.x = Random.Range(-(laneWidth / 2) + 2, (laneWidth / 2) - 2);
-            spawn.z = Random.Range((laneLength / 2) - 10, laneLength / 2) - 1;
-            Instantiate(boostGate, spawn, Quaternion.identity);
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range((laneLength / 2) + 1, laneLength / 2) + 10;
+            spawn.x = Random.Range(-1.5f, 1.5f);
+            spawn.z = Random.Range(5, 25);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
+            spawn.x = Random.Range(-1.5f, 1.5f);
+            spawn.z = Random.Range(125, 140);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
+            int i = Random.Range(0, 1);
+            if (i == 0)
+            {
+                spawn.x = -8.07f;
+                spawn.z = 56.3f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
+            else
+            {
+                spawn.x = 8.07f;
+                spawn.z = 56.3f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
             return;
         }
         if (level < 20)
@@ -242,9 +255,32 @@ public class LevelGenerator : MonoBehaviour
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
             spawn.z = Random.Range(laneLength / 3, 2 * (laneLength / 3));
             Instantiate(obstacles[0], spawn, Quaternion.identity);
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range(2 * (laneLength / 3), laneLength - 5);
-            Instantiate(obstacles[0], spawn, Quaternion.identity);
+            int i = Random.Range(0, 1);
+            if (i == 0)
+            {
+                spawn.x = -8.07f;
+                spawn.z = 56.3f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
+            else
+            {
+                spawn.x = 8.07f;
+                spawn.z = 56.3f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
+            i = Random.Range(0, 1);
+            if (i == 0)
+            {
+                spawn.x = 6.66f;
+                spawn.z = 97.32f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
+            else
+            {
+                spawn.x = -6.66f;
+                spawn.z = 97.32f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
             return;
         }
     }
