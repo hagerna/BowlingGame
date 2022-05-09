@@ -7,11 +7,13 @@ public class LevelGenerator : MonoBehaviour
     public GameObject pin, ball, boostGate, ramp;
     public GameObject[] lanes;
     public GameObject[] obstacles;
+    public GameObject[] ballPrefabs;
     int currentWorld;
-    bool[] worldsCompleted;
+    public bool[] worldsCompleted;
+    public bool touchControls;
 
     private static LevelGenerator _instance;
-    public static LevelGenerator instance
+    public static LevelGenerator Instance
     {
         get
         {
@@ -37,7 +39,20 @@ public class LevelGenerator : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(_instance);
-        currentWorld = 1;
+        currentWorld = 0;
+        foreach (GameObject ball in ballPrefabs)
+        {
+            if (touchControls)
+            {
+                ball.GetComponent<PlayerControls>().enabled = false;
+                ball.GetComponent<TouchControls>().enabled = true;
+            }
+            else
+            {
+                ball.GetComponent<TouchControls>().enabled = false;
+                ball.GetComponent<PlayerControls>().enabled = true;
+            }
+        }
     }
 
     //Generate Level by instantiating lane, pins, and bowling ball (obstacles not implemented yet)
@@ -61,7 +76,7 @@ public class LevelGenerator : MonoBehaviour
             newLane.transform.localScale = new Vector3(pinRows + Offset, 1, laneLength);
         }
         Vector3 firstPin = new Vector3(Offset, 1, laneLength - (pinRows * pinSeparation + 5.5f));
-        Instantiate(ball, Vector3.up, Quaternion.LookRotation(Vector3.right));
+        SelectBall();
         GeneratePins(pinRows, firstPin, pinSeparation);
         GenerateObstacles(pinRows + Offset, firstPin.z);
     }
@@ -84,6 +99,34 @@ public class LevelGenerator : MonoBehaviour
         }
         worldsCompleted[currentWorld] = true;
     }
+
+    void SelectBall()
+    {
+        switch (GameManager.Instance.currentBall)
+        {
+            case "basic":
+                ball = ballPrefabs[0];
+                break;
+            case "fire":
+                ball = ballPrefabs[1];
+                break;
+            case "ghost":
+                ball = ballPrefabs[2];
+                break;
+            case "gold":
+                ball = ballPrefabs[3];
+                break;
+            case "vortex":
+                ball = ballPrefabs[4];
+                break;
+            default:
+                ball = null;
+                Debug.Log("Error with SelectBall() in LevelGenerator");
+                break;
+        }
+        NewBall();
+    }
+
 
     //public function to be called on at level generation
     //PARAMETERS: rows --> number of rows of pins (increase with difficulty),

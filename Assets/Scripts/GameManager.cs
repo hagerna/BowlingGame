@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public float pinsCollected, pinSeparation, totalScore;
     public string currentBall; //types: basic, fire, gold, ghost, vortex
     public GameObject scoreScreenUI;
+    public bool LoadOnStart = true;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -41,7 +42,10 @@ public class GameManager : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(_instance);
         InitializeData();
-        LevelReset();
+        if (LoadOnStart)
+        {
+            LevelReset();
+        }
     }
 
     private void InitializeData()
@@ -82,7 +86,7 @@ public class GameManager : MonoBehaviour
         gameData["ballsLeft"]--;
         if (GameObject.FindGameObjectWithTag("Pin") != null && gameData["ballsLeft"] > 0)
         {
-            LevelGenerator.instance.NewBall();
+            LevelGenerator.Instance.NewBall();
         }
 
     }
@@ -114,13 +118,12 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        //FindObjectOfType<PlayerControls>().movementLocked = true;
         StartCoroutine(NextLevel());
     }
 
     bool StrikeCheck()
     {
-        if (gameData["ballsPerLevel"] - 1 == gameData["ballsLeft"] || gameData["ballsPerLevel"] == gameData["ballsLeft"])
+        if (gameData["ballsPerLevel"] - 1 == gameData["ballsLeft"] || (gameData["ballsPerLevel"] == gameData["ballsLeft"] && gameData["level"] != 0))
         {
             //This is where you can implement a graphic, Erik
             gameData["strikes"]++;
@@ -147,10 +150,10 @@ public class GameManager : MonoBehaviour
             gameData["pinRows"]++;
             gameData["laneLength"]+=5;
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("Base Level");
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        LevelGenerator.instance.GenerateLevel(gameData["pinRows"], gameData["laneLength"], pinSeparation);
+        LevelGenerator.Instance.GenerateLevel(gameData["pinRows"], gameData["laneLength"], pinSeparation);
         StartCoroutine(CheckPins());
     }
 

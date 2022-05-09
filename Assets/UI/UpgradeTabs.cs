@@ -37,4 +37,9 @@ public class UpgradeTabs : MonoBehaviour
                 break;
         }
     }
+
+    public void StartLevel()
+    {
+        GameManager.Instance.LevelReset();
+    }
 }

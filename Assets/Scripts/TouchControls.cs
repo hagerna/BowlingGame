@@ -12,6 +12,8 @@ public class TouchControls : MonoBehaviour
     RectTransform powerBar;
 
     public bool explosion, gold, blackhole, ghost;
+    public ParticleSystem impactEffect, deathEffect;
+    public Material ghostRegular, ghostFade;
 
     private Rigidbody rb;
 
@@ -40,6 +42,10 @@ public class TouchControls : MonoBehaviour
             {
                 horizontal = -Vector3.right * Time.deltaTime * horizontalControl;
                 rb.velocity += horizontal;
+            }
+            if (Input.touchCount == 2 && ghost)
+            {
+                StartCoroutine(GhostMode());
             }
         }
         if (rb.velocity.z < 0.25f)
@@ -88,14 +94,35 @@ public class TouchControls : MonoBehaviour
             }
         }
         launchSpeed = launchSpeed / 1900f * forwardSpeed;
+        if (launchSpeed < 0.25f)
+        {
+            launchSpeed = 0.5f;
+        }
         rb.velocity = new Vector3(0,0,launchSpeed);
         movementLocked = false;
         powerBar.sizeDelta = new Vector2(50, 0);
     }
 
-    void Boost()
+    void Boost(Vector3 direction = default(Vector3))
     {
-        rb.velocity += Vector3.forward * forwardSpeed;
+        if (direction == Vector3.zero)
+        {
+            direction = Vector3.forward;
+        }
+        rb.velocity += direction * forwardSpeed;
+    }
+
+    IEnumerator GhostMode()
+    {
+        ghost = false;
+        rb.useGravity = false;
+        GetComponent<Collider>().enabled = false;
+        GetComponent<Renderer>().material = ghostFade;
+        //change material
+        yield return new WaitForSeconds(1.5f);
+        rb.useGravity = true;
+        GetComponent<Collider>().enabled = true;
+        GetComponent<Renderer>().material = ghostRegular;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -116,21 +143,35 @@ public class TouchControls : MonoBehaviour
 
     void HandleImpactEffect()
     {
-        Collider[] pins = Physics.OverlapSphere(transform.position, 2f);
+        Collider[] pins = Physics.OverlapSphere(transform.position, 5f);
+        Instantiate(impactEffect, transform.position, Quaternion.identity);
         for (int pin = 0; pin < pins.Length; pin++)
         {
             if (pins[pin].CompareTag("Pin"))
             {
-                if (explosion) { pins[pin].GetComponent<PinScript>().Explode(transform.position); }
-                if (explosion) { pins[pin].GetComponent<PinScript>().Blackhole(transform.position); }
+                if (explosion)
+                {
+                    pins[pin].GetComponent<PinScript>().Explode(transform.position);
+                }
+                else if (blackhole)
+                {
+                    pins[pin].GetComponent<PinScript>().Blackhole(transform.position);
+                }
             }
         }
+        explosion = false;
+        blackhole = false;
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Boost"))
         {
-            Boost();
+            Boost(other.gameObject.transform.forward);
+        }
+        else if (other.CompareTag("Lock"))
+        {
+            movementLocked = true;
         }
         else if (other.CompareTag("CameraStop"))
         {
@@ -152,16 +193,17 @@ public class TouchControls : MonoBehaviour
     IEnumerator PlayerDeath()
     {
         rb.isKinematic = true;
-        GetComponent<MeshRenderer>().enabled = false;
-        //trigger particle effect
-        yield return new WaitForSeconds(1f);
+        if (GetComponent<MeshRenderer>() != null)
+        {
+            GetComponent<MeshRenderer>().enabled = false;
+        }
+        Instantiate(deathEffect, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.35f);
         if (!resetTriggered)
         {
             GameManager.Instance.BallReset();
             resetTriggered = true;
         }
         Destroy(gameObject);
-
-        GameManager.Instance.baseData["ballsPerLevel"]++;
     }
 }
