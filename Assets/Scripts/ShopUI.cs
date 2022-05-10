@@ -21,8 +21,6 @@ namespace ShopSystem
 
         public Text[] costText, currentLevelText;
         public Text totalPinsText;
-        public Button buySelectButton;
-        public Button buyUpgradeButton;
 
 
         private void Start()
@@ -37,6 +35,11 @@ namespace ShopSystem
                     currentLevelText[itemNumber - 4].text = "Current Level: " + item.unlockedLevel;
                 }
             }
+        }
+
+        private void Update()
+        {
+            totalPinsText.text = "Total Score: " + GameManager.Instance.totalScore;
         }
 
         public void buySelectButtonMethod(int index)
