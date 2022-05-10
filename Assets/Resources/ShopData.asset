@@ -13,51 +13,37 @@ MonoBehaviour:
   m_Name: ShopData
   m_EditorClassIdentifier: 
   shopItems:
-  - itemName: Control Upgrade
-    isUnlocked: 1
-    unlockCost: 0
-    ballUpgrades:
-    - unlockCost: 10
-      control: 100
-      speed: 0
-      bumperNumber: 0
-    - unlockCost: 20
-      control: 200
-      speed: 0
-      bumperNumber: 0
-    - unlockCost: 30
-      control: 300
-      speed: 0
-      bumperNumber: 0
-    - unlockCost: 40
-      control: 400
-      speed: 0
-      bumperNumber: 0
-    - unlockCost: 50
-      control: 500
-      speed: 0
-      bumperNumber: 0
-  - itemName: Speed Upgrade
+  - itemName: fire
     isUnlocked: 0
-    unlockCost: 0
-    ballUpgrades:
-    - unlockCost: 10
-      control: 0
-      speed: 100
-      bumperNumber: 0
-    - unlockCost: 20
-      control: 0
-      speed: 200
-      bumperNumber: 0
-    - unlockCost: 30
-      control: 0
-      speed: 300
-      bumperNumber: 0
-    - unlockCost: 40
-      control: 400
-      speed: 0
-      bumperNumber: 0
-    - unlockCost: 50
-      control: 500
-      speed: 0
-      bumperNumber: 0
+    unlockCost: 1500
+    unlockedLevel: 0
+    controlUpgrades: []
+    speedUpgradeArray: []
+    bumperUpgradeArray: []
+    ballLives: []
+  - itemName: ghost
+    isUnlocked: 0
+    unlockCost: 3000
+    unlockedLevel: 0
+    controlUpgrades: []
+    speedUpgradeArray: []
+    bumperUpgradeArray: []
+    ballLives: []
+  - itemName: gold
+    isUnlocked: 0
+    unlockCost: 5000
+    unlockedLevel: 0
+    controlUpgrades: []
+    speedUpgradeArray: []
+    bumperUpgradeArray: []
+    ballLives: []
+  - itemName: vortex
+    isUnlocked: 0
+    unlockCost: 10000
+    unlockedLevel: 0
+    controlUpgrades: []
+    speedUpgradeArray: []
+    bumperUpgradeArray: []
+    ballLives: []
+  selectedIndex: 0
+  selectedName: 

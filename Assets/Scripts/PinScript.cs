@@ -24,6 +24,7 @@ public class PinScript : MonoBehaviour
             else //pin is no longer standing
             {
                 standing = false;
+                AudioSingleton.Play("One Pin");
                 PinFallEffect();
             }
         }
@@ -33,6 +34,7 @@ public class PinScript : MonoBehaviour
 
     void PinFallEffect()
     {
+        
         //Update pin counter
         GameManager.Instance.pinsCollected++;
         if (GameManager.Instance.currentBall == "gold")

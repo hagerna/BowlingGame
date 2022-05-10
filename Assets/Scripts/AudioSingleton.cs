@@ -53,36 +53,7 @@ public class AudioSingleton : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("1"))
-        {
-            Stop(_instance.activeSound);
-            SceneManager.LoadScene(1);
-            PlayMusic("IntroStagesMusic");
-        }
-        if (Input.GetKeyDown("2"))
-        {
-            Stop(_instance.activeSound);
-            SceneManager.LoadScene(3);
-            PlayMusic("CyanStagesMusic");
-        }
-        if (Input.GetKeyDown("3"))
-        {
-            Stop(_instance.activeSound);
-            SceneManager.LoadScene(6);
-            PlayMusic("YellowStagesMusic");
-        }
-        if (Input.GetKeyDown("4"))
-        {
-            Stop(_instance.activeSound);
-            SceneManager.LoadScene(10);
-            PlayMusic("MagentaStagesMusic");
-        }
-        if (Input.GetKeyDown("5"))
-        {
-            Stop(_instance.activeSound);
-            SceneManager.LoadScene(15);
-            PlayMusic("BossMusic");
-        }
+        
     }
 
     public static void Play(string name)
@@ -114,6 +85,7 @@ public class AudioSingleton : MonoBehaviour
 
     public static void NextScene()
     {
+        /*
         int scene = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(scene);
         if (scene == 1)
@@ -144,8 +116,8 @@ public class AudioSingleton : MonoBehaviour
         else if (scene == 16)
         {
             Stop(_instance.activeSound);
-            PlayMusic("MenuMusic");
+            PlayMusic("MenuMusic"); */
         }
-    }
+  
 }
 

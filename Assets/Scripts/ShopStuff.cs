@@ -9,6 +9,8 @@ namespace ShopSystem {
     public class ShopStuff : ScriptableObject
     {
         public ShopItem[] shopItems;
+        public int selectedIndex;
+        public string selectedName;
 
     }
 
@@ -19,10 +21,12 @@ namespace ShopSystem {
         public string itemName;
         public bool isUnlocked;
         public int unlockCost;
+        public int unlockedLevel = 1;
 
         public Control[] controlUpgrades;
         public Speed[] speedUpgradeArray;
         public Bumper[] bumperUpgradeArray;
+        public Lives[] ballLives;
         
         //public Balls[] additionalBalls;
         //public Pin[] pinUpgrades;
@@ -31,6 +35,14 @@ namespace ShopSystem {
         public Speed[] speedUpgrades;
         public Bumper[] bumperUpgrades;*/
 
+    }
+
+    [System.Serializable]
+
+    public class Lives
+    {
+        public int unlockCost;
+        public int numberOfLives;
     }
 
     [System.Serializable]
