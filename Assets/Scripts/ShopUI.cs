@@ -19,105 +19,70 @@ namespace ShopSystem
 
         //public GameObject[] ballModels;
 
-        public Text costText, upgradeCostText;
+        public Text[] costText, currentLevelText;
         public Text totalPinsText;
         public Button buySelectButton;
         public Button buyUpgradeButton;
 
-        //private string currentName;
-        //private string selectedName;
-     
-        private int currentIndex = 0;
-        private int selectedIndex = 0;
 
         private void Start()
         {
-            //selectedName = shopData.selectedName;
-            //currentName = selectedName;
-
-            selectedIndex = shopData.selectedIndex;
-            currentIndex = selectedIndex;
-
-            //totalPinsText.text = "" + totalPins;
-            setBallInfo();
-
-            //buySelectButton.onClick.AddListener(()=> buySelectButtonMethod()); maybe just do this in Unity UI?
-
-
-
-        //ballModels[currentIndex].SetActive(true);
-            
-
+            int itemNumber = 0;
+            foreach (ShopItem item in shopData.shopItems)
+            {
+                item.isUnlocked = false;
+                costText[itemNumber].text = "Cost: " + item.unlockCost;
+                if (itemNumber >= 4)
+                {
+                    currentLevelText[itemNumber - 4].text = "Current Level: " + item.unlockedLevel;
+                }
+            }
         }
 
-        private void setBallInfo()
-        { 
-
-            int currentLevel = shopData.shopItems[currentIndex].unlockCost;
-
-        }
-
-        public void buySelectButtonMethod(string ballName)
+        public void buySelectButtonMethod(int index)
         {
+            ShopItem item = shopData.shopItems[index];
             Debug.Log("Button clicked!");
-            currentIndex = checkIndex(ballName);
             bool yesSelected = false;
-            if(shopData.shopItems[currentIndex].isUnlocked)
+            if(item.isUnlocked)
             {
                 yesSelected = true;
             } else
             {
-                if (totalPins >= shopData.shopItems[currentIndex].unlockCost)
+                if (GameManager.Instance.totalScore >= item.unlockCost)
                 {
-                    totalPins -= shopData.shopItems[currentIndex].unlockCost;
-                    //totalPinsText.text = "" + totalPins;
-                    yesSelected = true;
-                    GameManager.Instance.currentBall = ballName;
-                    shopData.shopItems[currentIndex].isUnlocked = true;
-                   
-                       
+                    GameManager.Instance.totalScore -= item.unlockCost;
+                    if (item.incrementCost == 0) //we know it is a ball and not a stat upgrade
+                    {
+                        GameManager.Instance.currentBall = item.itemName;
+                        yesSelected = true;
+                        costText[index].enabled = false;
+                        Debug.Log("I am well behaved :)");
+                        // set button to equip
+                    }
+                    else
+                    {
+                        item.unlockCost += item.incrementCost;
+                        GameManager.Instance.baseData[item.itemName] += item.incrementValue;
+                        currentLevelText[index-4].text = "Current Level = " + item.unlockedLevel;
+                        costText[index].text = "Cost: " + item.unlockedLevel;
+                        Debug.Log("I like stats");
+                    }
+                    item.isUnlocked = true;      
                 }
             }
 
-            if(yesSelected)
+            /* if(yesSelected)
             {
                 buySelectButton.image.sprite = selectButtonImage;
                 selectedIndex = currentIndex;
                 shopData.selectedIndex = selectedIndex;
                 buySelectButton.interactable = false; 
-            }
+            } */
 
         }
 
-        private int checkIndex(string ballName)
-        {
-            switch (ballName)
-            {
-                case "fire":
-                    currentIndex = 0;
-                    return currentIndex;
-
-                case "ghost":
-                    currentIndex = 1;
-                    return currentIndex;
-
-                case "gold":
-                    currentIndex = 2;
-                    return currentIndex;
-
-                case "vortex":
-                    currentIndex = 3;
-                    return currentIndex;
-
-                default:
-                    currentIndex = 0;
-                    Debug.Log("Something went wrong with checkIndex! :(");
-                    return currentIndex;
-                   
-            }
-        }
-
-        private void BuyButtonStatus()
+        /* private void BuyButtonStatus()
         {
             if (shopData.shopItems[currentIndex].isUnlocked)
             {
@@ -138,7 +103,7 @@ namespace ShopSystem
                 buySelectButton.interactable = true;
                 buySelectButton.image.sprite = buyButtonImage;
             }
-        }
+        } */
 
         /*
 
