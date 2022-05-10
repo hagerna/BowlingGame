@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pin: {fileID: 1239259235602018412, guid: 8c703e436525a4819a0080ade693c825, type: 3}
+  ball: {fileID: 2800437294105566993, guid: 739c428b30ad0400d818569e4d082ab2, type: 3}
   boostGate: {fileID: 2352314570805376892, guid: 3d12293fa4ca5447989e7341b5ff5f59, type: 3}
   ramp: {fileID: 853669083334989945, guid: 1a1f9067c533341d38ba7bb3fb3efdd4, type: 3}
   lanes:
@@ -54,6 +55,8 @@ MonoBehaviour:
   ballPrefabs:
   - {fileID: 2800437294105566993, guid: 739c428b30ad0400d818569e4d082ab2, type: 3}
   - {fileID: 2800437294105566993, guid: 2aaa1a2b4bb48436aa33eba5770c48ae, type: 3}
-  - {fileID: 2800437294105566993, guid: 2a245250f34fa4a5e8806b532aca424d, type: 3}
   - {fileID: 2800437294105566993, guid: af4df8c0e786140339da736358b1efd2, type: 3}
+  - {fileID: 2800437294105566993, guid: 2a245250f34fa4a5e8806b532aca424d, type: 3}
   - {fileID: 2800437294105566993, guid: 371edf223e37c43a0a94027cd1196466, type: 3}
+  worldsCompleted: 00000000
+  touchControls: 1

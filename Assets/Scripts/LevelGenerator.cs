@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public GameObject pin, boostGate, ramp;
+    public GameObject pin, ball, boostGate, ramp;
     public GameObject[] lanes;
     public GameObject[] obstacles;
     public GameObject[] ballPrefabs;
     int currentWorld;
-    bool[] worldsCompleted;
-
-    GameObject ball;
+    public bool[] worldsCompleted;
+    public bool touchControls;
 
     private static LevelGenerator _instance;
-    public static LevelGenerator instance
+    public static LevelGenerator Instance
     {
         get
         {
@@ -41,6 +40,19 @@ public class LevelGenerator : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(_instance);
         currentWorld = 0;
+        foreach (GameObject ball in ballPrefabs)
+        {
+            if (touchControls)
+            {
+                ball.GetComponent<PlayerControls>().enabled = false;
+                ball.GetComponent<TouchControls>().enabled = true;
+            }
+            else
+            {
+                ball.GetComponent<TouchControls>().enabled = false;
+                ball.GetComponent<PlayerControls>().enabled = true;
+            }
+        }
     }
 
     //Generate Level by instantiating lane, pins, and bowling ball (obstacles not implemented yet)
@@ -52,14 +64,20 @@ public class LevelGenerator : MonoBehaviour
     {
         CheckWorld();
         Vector3 lanePosition = new Vector3(0, 0, (laneLength / 2f) - 5f);
-        GameObject newLane = Instantiate(lanes[currentWorld], lanePosition, Quaternion.identity);
-        if (currentWorld != 1)
+        if (currentWorld == 1)
         {
+            lanePosition = new Vector3(0, 0, -5);
+            Instantiate(lanes[currentWorld], lanePosition, Quaternion.identity);
+            laneLength = 160;
+        }
+        else
+        {
+            GameObject newLane = Instantiate(lanes[currentWorld], lanePosition, Quaternion.identity);
             newLane.transform.localScale = new Vector3(pinRows + Offset, 1, laneLength);
         }
         Vector3 firstPin = new Vector3(Offset, 1, laneLength - (pinRows * pinSeparation + 5.5f));
+        SelectBall();
         GeneratePins(pinRows, firstPin, pinSeparation);
-        ChooseBall();
         GenerateObstacles(pinRows + Offset, firstPin.z);
     }
 
@@ -81,6 +99,34 @@ public class LevelGenerator : MonoBehaviour
         }
         worldsCompleted[currentWorld] = true;
     }
+
+    void SelectBall()
+    {
+        switch (GameManager.Instance.currentBall)
+        {
+            case "basic":
+                ball = ballPrefabs[0];
+                break;
+            case "fire":
+                ball = ballPrefabs[1];
+                break;
+            case "ghost":
+                ball = ballPrefabs[2];
+                break;
+            case "gold":
+                ball = ballPrefabs[3];
+                break;
+            case "vortex":
+                ball = ballPrefabs[4];
+                break;
+            default:
+                ball = null;
+                Debug.Log("Error with SelectBall() in LevelGenerator");
+                break;
+        }
+        NewBall();
+    }
+
 
     //public function to be called on at level generation
     //PARAMETERS: rows --> number of rows of pins (increase with difficulty),
@@ -109,34 +155,6 @@ public class LevelGenerator : MonoBehaviour
     void SelectPin(Vector3 position)
     {
         Instantiate(pin, position, Quaternion.identity);
-    }
-
-    //Determine which ball prefab to Instantiate
-    void ChooseBall()
-    {
-        switch (GameManager.Instance.currentBall)
-        {
-            case "basic":
-                ball = ballPrefabs[0];
-                break;
-            case "fire":
-                ball = ballPrefabs[1];
-                break;
-            case "gold":
-                ball = ballPrefabs[2];
-                break;
-            case "ghost":
-                ball = ballPrefabs[3];
-                break;
-            case "vortex":
-                ball = ballPrefabs[4];
-                break;
-            default:
-                ball = null;
-                Debug.Log("error in ChooseBall(), ball type not found");
-                break;
-        }
-        Instantiate(ball, Vector3.up, Quaternion.LookRotation(Vector3.right));
     }
 
     void GenerateObstacles(float laneWidth, float laneLength)
@@ -225,7 +243,89 @@ public class LevelGenerator : MonoBehaviour
 
     void GenerateWorld1Level(int level, float laneWidth, float laneLength)
     {
+        level = level % 20;
+        Vector3 spawn = Vector3.up;
+        if (level < 5)
+        {
+            spawn.x = Random.Range(-1.5f, 1.5f);
+            spawn.z = Random.Range(5, 25);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
+            return;
+        }
+        if (level < 10)
+        {
+            spawn.x = Random.Range(-1.5f, 1.5f);
+            spawn.z = Random.Range(5, 25);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
+            spawn.x = Random.Range(-1.5f, 1.5f);
+            spawn.z = Random.Range(125, 140);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
+            return;
 
+        }
+        if (level == 10)
+        {
+            return;
+        }
+        if (level < 15)
+        {
+            spawn.x = Random.Range(-1.5f, 1.5f);
+            spawn.z = Random.Range(5, 25);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
+            spawn.x = Random.Range(-1.5f, 1.5f);
+            spawn.z = Random.Range(125, 140);
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
+            int i = Random.Range(0, 1);
+            if (i == 0)
+            {
+                spawn.x = -8.07f;
+                spawn.z = 56.3f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
+            else
+            {
+                spawn.x = 8.07f;
+                spawn.z = 56.3f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
+            return;
+        }
+        if (level < 20)
+        {
+            spawn.x = Random.Range(-(laneWidth / 2) + 2, (laneWidth / 2) - 2);
+            spawn.z = Random.Range(10, laneLength / 3);
+            Instantiate(boostGate, spawn, Quaternion.identity);
+            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+            spawn.z = Random.Range(laneLength / 3, 2 * (laneLength / 3));
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
+            int i = Random.Range(0, 1);
+            if (i == 0)
+            {
+                spawn.x = -8.07f;
+                spawn.z = 56.3f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
+            else
+            {
+                spawn.x = 8.07f;
+                spawn.z = 56.3f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
+            i = Random.Range(0, 1);
+            if (i == 0)
+            {
+                spawn.x = 6.66f;
+                spawn.z = 97.32f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
+            else
+            {
+                spawn.x = -6.66f;
+                spawn.z = 97.32f;
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+            }
+            return;
+        }
     }
 
     // Create a new ball object for the player to roll again

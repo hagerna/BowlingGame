@@ -45,9 +45,13 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-    void Boost()
+    void Boost(Vector3 direction = default(Vector3))
     {
-        rb.velocity += Vector3.forward * forwardSpeed;
+        if (direction == Vector3.zero)
+        {
+            direction = Vector3.forward;
+        }
+        rb.velocity += direction * forwardSpeed;
     }
 
     IEnumerator GhostMode()
@@ -103,8 +107,12 @@ public class PlayerControls : MonoBehaviour
     {
         if (other.CompareTag("Boost"))
         {
-            Boost();
+            Boost(other.gameObject.transform.forward);
         }
+        else if (other.CompareTag("Lock"))
+            {
+                movementLocked = true;
+            }
         else if (other.CompareTag("CameraStop"))
         {
             Camera.main.GetComponent<CameraFollow>().follow = false;

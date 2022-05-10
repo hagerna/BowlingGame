@@ -37,9 +37,11 @@ public class ScoreDisplay : MonoBehaviour
 
     public void LoadUpgradesScene()
     {
-        Debug.Log("Change to Upgrades scene");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("Upgrades");
+        Invoke(nameof(Deconstructor), 0.75f);
+    }
+
+    void Deconstructor() {
         Destroy(gameObject);
-        GameManager.Instance.LevelReset();
     }
 }

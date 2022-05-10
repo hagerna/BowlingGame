@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 2800437294105566995}
   - component: {fileID: 2800437294105566992}
   - component: {fileID: 2800437294105566999}
-  - component: {fileID: 2651044326907626825}
+  - component: {fileID: -8225201636699369731}
   m_Layer: 0
-  m_Name: Vortex Ball
+  m_Name: BasicBall
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 56f6a7cb3e7d643aea90a67e1fd7c883, type: 2}
+  - {fileID: 2100000, guid: 380f3cbc4ca434f94a6021c0754559db, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,12 +132,12 @@ MonoBehaviour:
   explosion: 0
   gold: 0
   ghost: 0
-  blackhole: 1
-  impactEffect: {fileID: 3123075737211501168, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
+  blackhole: 0
+  impactEffect: {fileID: 0}
   deathEffect: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
   ghostRegular: {fileID: 0}
   ghostFade: {fileID: 0}
---- !u!114 &2651044326907626825
+--- !u!114 &-8225201636699369731
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,9 +155,9 @@ MonoBehaviour:
   initialLaunch: 1
   explosion: 0
   gold: 0
-  blackhole: 1
+  blackhole: 0
   ghost: 0
-  impactEffect: {fileID: 3123075737211501168, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
+  impactEffect: {fileID: 0}
   deathEffect: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
   ghostRegular: {fileID: 0}
   ghostFade: {fileID: 0}

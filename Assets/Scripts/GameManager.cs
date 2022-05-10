@@ -8,9 +8,10 @@ public class GameManager : MonoBehaviour
     //Public Variables to be accessed by other scripts:
     public Dictionary<string, int> gameData = new Dictionary<string, int>();
     public Dictionary<string, int> baseData = new Dictionary<string, int>();
-    public float pinsCollected, pinSeparation, laneLength, totalScore;
+    public float pinsCollected, pinSeparation, totalScore;
     public string currentBall; //types: basic, fire, gold, ghost, vortex
     public GameObject scoreScreenUI;
+    public bool LoadOnStart = true;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -41,7 +42,10 @@ public class GameManager : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(_instance);
         InitializeData();
-        LevelReset();
+        if (LoadOnStart)
+        {
+            LevelReset();
+        }
     }
 
     private void InitializeData()
@@ -56,7 +60,7 @@ public class GameManager : MonoBehaviour
         //"
         baseData["ballsLeft"] = 2;
         baseData["ballsPerLevel"] = 2;
-        baseData["level"] = 1;
+        baseData["level"] = 0;
         baseData["strikes"] = 0;
         baseData["strikeStreak"] = 0;
         baseData["bumperLives"] = 0;
@@ -65,7 +69,14 @@ public class GameManager : MonoBehaviour
         baseData["laneLength"] = 50;
         pinsCollected = 0;
         pinSeparation = 1f;
-        laneLength = 50f;
+    }
+
+    void BaseToGameData()
+    {
+        foreach (KeyValuePair<string,int> variable in baseData)
+        {
+            gameData[variable.Key] = variable.Value;
+        }
     }
 
 
@@ -75,13 +86,14 @@ public class GameManager : MonoBehaviour
         gameData["ballsLeft"]--;
         if (GameObject.FindGameObjectWithTag("Pin") != null && gameData["ballsLeft"] > 0)
         {
-            LevelGenerator.instance.NewBall();
+            LevelGenerator.Instance.NewBall();
         }
 
     }
 
     IEnumerator CheckPins()
     {
+        yield return new WaitForSeconds(2f);
         bool pinsStanding = true;
         while (pinsStanding)
         {
@@ -106,28 +118,31 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        //FindObjectOfType<PlayerControls>().movementLocked = true;
         StartCoroutine(NextLevel());
     }
 
-    void StrikeCheck()
+    bool StrikeCheck()
     {
-        if (gameData["ballsPerLevel"] - 1 == gameData["ballsLeft"] || gameData["ballsPerLevel"] == gameData["ballsLeft"])
+        if (gameData["ballsPerLevel"] - 1 == gameData["ballsLeft"] || (gameData["ballsPerLevel"] == gameData["ballsLeft"] && gameData["level"] != 0))
         {
-            //strike
+            //This is where you can implement a graphic, Erik
             gameData["strikes"]++;
             gameData["strikeStreak"]++;
+            return true;
         }
         else
         {
             gameData["strikeStreak"] = 0;
+            return false;
         }
     }
 
     IEnumerator NextLevel()
     {
-        StrikeCheck();
-        yield return new WaitForSeconds(2f); // wait for celebration graphic
+        if (StrikeCheck() && gameData["level"] != 0)
+        {
+            yield return new WaitForSeconds(2f); // wait for celebration graphic
+        }
         gameData["level"]++;
         gameData["ballsLeft"] = gameData["ballsPerLevel"];
         if (gameData["level"] % 5 == 0)
@@ -135,27 +150,24 @@ public class GameManager : MonoBehaviour
             gameData["pinRows"]++;
             gameData["laneLength"]+=5;
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("Base Level");
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
-        LevelGenerator.instance.GenerateLevel(gameData["pinRows"], gameData["laneLength"], pinSeparation); //, laneMaterials[gameData["level"] / 10]);
+        LevelGenerator.Instance.GenerateLevel(gameData["pinRows"], gameData["laneLength"], pinSeparation);
         StartCoroutine(CheckPins());
     }
 
     public void LevelReset()
     {
-        gameData = baseData;
-        Debug.Log(gameData["level"]);
+        BaseToGameData();
         pinsCollected = 0;
         pinSeparation = 1f;
-        laneLength = 50f;
-        LevelGenerator.instance.GenerateLevel(4, 50, 1f);
-        StartCoroutine(CheckPins());
+        StartCoroutine(NextLevel());
     }
 
     public float TotalScore()
     {
-        totalScore = pinsCollected + (gameData["strikes"] * 10);
+        totalScore += pinsCollected + (gameData["strikes"] * 10);
         return totalScore;
     }
 }
