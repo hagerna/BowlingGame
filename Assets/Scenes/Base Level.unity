@@ -326,6 +326,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: touchControls
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: lanes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: lanes.Array.data[2]
+      value: 
+      objectReference: {fileID: 4767239208570625954, guid: 552414ff9dec746f4b95b7c21bfc72cd, type: 3}
     - target: {fileID: 211977590211578730, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1187,7 +1199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7745255835832867775, guid: 6804a27476eab4720a952b8713d4cf2e, type: 3}
       propertyPath: currentBall
-      value: basic
+      value: fire
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6804a27476eab4720a952b8713d4cf2e, type: 3}
