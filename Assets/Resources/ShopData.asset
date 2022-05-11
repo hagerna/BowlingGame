@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopItems:
   - itemName: fire
-    isUnlocked: 0
+    isUnlocked: 1
     unlockCost: 1500
     unlockedLevel: 0
     incrementCost: 0

@@ -10,6 +10,7 @@ TagManager:
   - Boost
   - CameraStop
   - Lock
+  - Bouncy
   layers:
   - Default
   - TransparentFX

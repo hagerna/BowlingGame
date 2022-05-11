@@ -39,7 +39,7 @@ public class LevelGenerator : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(_instance);
-        currentWorld = 2;
+        currentWorld = 0;
         foreach (GameObject ball in ballPrefabs)
         {
             if (touchControls)
@@ -70,19 +70,20 @@ public class LevelGenerator : MonoBehaviour
             Instantiate(lanes[currentWorld], lanePosition, Quaternion.identity);
             laneLength = 160;
         }
-        if (currentWorld == 2)
-        {
-            GameObject newLane = Instantiate(lanes[currentWorld], lanePosition, Quaternion.identity);
-            newLane.transform.localScale = new Vector3(pinRows + Offset, 1, laneLength);
-            laneLength = laneLength * 2.5f + 3;
-        }
         else
         {
             GameObject newLane = Instantiate(lanes[currentWorld], lanePosition, Quaternion.identity);
             newLane.transform.localScale = new Vector3(pinRows + Offset, 1, laneLength);
+            if (currentWorld == 2)
+            {
+                laneLength = laneLength * 2.5f + 3;
+            }
+            if (currentWorld == 3)
+            {
+                laneLength = laneLength * 4 + 2;
+            }
         }
         Vector3 firstPin = new Vector3(Offset, 1, laneLength - (pinRows * pinSeparation + 5.5f));
-        Debug.Log("first pin: " + firstPin);
         SelectBall();
         GeneratePins(pinRows, firstPin, pinSeparation);
         GenerateObstacles(pinRows + Offset, firstPin.z);
@@ -197,7 +198,7 @@ public class LevelGenerator : MonoBehaviour
                 GenerateWorld2Level(level, laneWidth, laneLength);
                 break;
             case 3:
-                //GenerateWorld3Level(level, laneWidth, laneLength);
+                GenerateWorld3Level(level, laneWidth, laneLength);
                 break;
             case 4:
                 //GenerateWorld4Level(level, laneWidth, laneLength);
@@ -213,7 +214,7 @@ public class LevelGenerator : MonoBehaviour
     // World 0 is the basic world, player will always go through variation of same 20 levels to start
     void GenerateWorld0Level(int level, float laneWidth, float laneLength)
     {
-        level = level % 20;
+        level %= 20;
         Vector3 spawn = Vector3.up;
         if (level < 5)
         {
@@ -264,7 +265,7 @@ public class LevelGenerator : MonoBehaviour
 
     void GenerateWorld1Level(int level, float laneWidth, float laneLength)
     {
-        level = level % 20;
+        level %= 20;
         Vector3 spawn = Vector3.up;
         if (level < 5)
         {
@@ -351,7 +352,7 @@ public class LevelGenerator : MonoBehaviour
 
     void GenerateWorld2Level(int level, float laneWidth, float laneLength)
     {
-        level = level % 20;
+        level %= 20;
         Vector3 spawn = Vector3.up;
         if (level < 5)
         {
@@ -385,44 +386,127 @@ public class LevelGenerator : MonoBehaviour
             Instantiate(ramp, spawn, Quaternion.Euler(66, 0, 0));
             spawn.y = 1f;
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range(laneLength*3 / 4, laneLength*3 / 4 + 10);
+            spawn.z = Random.Range(laneLength*3 / 4 +10, laneLength*3 / 4 + 20);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
 
             return;
 
         }
         if (level < 15)
-        {
+        { 
             spawn.y = 0.5f;
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = laneLength / 3 - Random.Range(5, 15);
-            Instantiate(ramp, spawn, Quaternion.Euler(66, 0, 0));
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
             spawn.z = laneLength / 3 + 6;
             Instantiate(ramp, spawn, Quaternion.Euler(66, 0, 0));
+            spawn.y = 2.5f;
+            spawn.x = Random.Range(-(laneWidth / 2), (laneWidth / 2));
+            spawn.z += 10;
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
+            spawn.y = 0.5f;
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = laneLength / 3 * 2 - Random.Range(5, 15);
+            spawn.z = laneLength / 3 * 2 + 6;
             Instantiate(ramp, spawn, Quaternion.Euler(66, 0, 0));
+            spawn.y = 2.5f;
+            spawn.x = Random.Range(-(laneWidth / 2), (laneWidth / 2));
+            spawn.z += 10;
+            Instantiate(obstacles[0], spawn, Quaternion.identity);
             spawn.y = 1f;
             spawn.x = Random.Range(-(laneWidth / 2) + 2, (laneWidth / 2) - 2);
-            spawn.z = Random.Range((laneLength / 2) - 10, laneLength / 2) - 1;
-            Instantiate(boostGate, spawn, Quaternion.identity);
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range((laneLength / 2) + 1, laneLength / 2) + 10;
+            spawn.z += Random.Range(5, 15);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
             return;
         }
         if (level < 20)
         {
+            spawn.y = 0.5f;
+            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+            spawn.z = laneLength / 3 - 10;
+            Instantiate(ramp, spawn, Quaternion.Euler(66, 0, 0));
+            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+            spawn.z = laneLength*2 / 3 - 8;
+            Instantiate(ramp, spawn, Quaternion.Euler(66, 0, 0));
+            spawn.y = 1f;
             spawn.x = Random.Range(-(laneWidth / 2) + 2, (laneWidth / 2) - 2);
-            spawn.z = Random.Range(10, laneLength / 3);
+            spawn.z = (laneLength / 3 - 10) - Random.Range(10, 15);
             Instantiate(boostGate, spawn, Quaternion.identity);
+            spawn.y = 6f;
+            spawn.x = Random.Range(-(laneWidth / 2), laneWidth / 2 - 3);
+            spawn.z = Random.Range(laneLength / 3 + 6, laneLength / 3 + 14);
+            Instantiate(obstacles[1], spawn, Quaternion.identity);
+            spawn.x = Random.Range(-(laneWidth / 2), laneWidth / 2 - 3);
+            spawn.z = Random.Range(2 * (laneLength / 3) + 6, 2 * (laneLength / 3) + 14);
+            Instantiate(obstacles[1], spawn, Quaternion.identity);
+            return;
+        }
+    }
+
+    void GenerateWorld3Level(int level, float laneWidth, float laneLength)
+    {
+        level %= 20;
+        Vector3 spawn = Vector3.up;
+        if (level < 5)
+        {
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range(laneLength / 3, 2 * (laneLength / 3));
+            spawn.z = Random.Range((laneLength / 2), laneLength / 2 + 20);
+            Instantiate(obstacles[2], spawn, Quaternion.identity);
+            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+            spawn.z = Random.Range((laneLength / 2) + 10, (laneLength / 2) + 40);
+            Instantiate(obstacles[2], spawn, Quaternion.identity);
+            return;
+        }
+        if (level < 10)
+        {
+            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+            spawn.z = laneLength / 5 + Random.Range(-15,0);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = Random.Range(2 * (laneLength / 3), laneLength - 5);
+            spawn.z = 4 * laneLength / 5 + Random.Range(30, 40);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
+            spawn.x = Random.Range(-(laneWidth / 2), laneWidth / 2);
+            spawn.z = Random.Range((laneLength / 2) -30, laneLength / 2) - 20;
+            Instantiate(obstacles[2], spawn, Quaternion.identity);
+            spawn.y = -13f;
+            spawn.x = Random.Range(-(laneWidth / 2), laneWidth / 2);
+            spawn.z += Random.Range(15, 30);
+            Instantiate(obstacles[2], spawn, Quaternion.Euler(90,0,0));
+            spawn.x = Random.Range(-(laneWidth / 2), laneWidth / 2);
+            spawn.z += Random.Range(15, 30);
+            Instantiate(obstacles[2], spawn, Quaternion.Euler(90, 0, 0));
+            spawn.x = Random.Range(-(laneWidth / 2), laneWidth / 2);
+            spawn.z += Random.Range(15, 30);
+            Instantiate(obstacles[2], spawn, Quaternion.Euler(90, 0, 0));
+            spawn.x = Random.Range(-(laneWidth / 2), laneWidth / 2);
+            spawn.z += Random.Range(15, 30);
+            Instantiate(obstacles[2], spawn, Quaternion.Euler(90, 0, 0));
+            return;
+
+        }
+        if (level < 15)
+        {
+            spawn.z = Random.Range((laneLength / 2) - 40, laneLength / 2) - 30;
+            for (int i = 0; i < 10; i++)
+            {
+                spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+                spawn.y = Random.Range(-10, 2);
+                Instantiate(obstacles[0], spawn, Quaternion.identity);
+                spawn.z += 11;
+            }
+            return;
+        }
+        if (level < 20)
+        {
+            spawn.z = laneLength / 2 - 50;
+            for (int i = 0; i < 6; i++)
+            {
+                spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+                spawn.y = Random.Range(-10, 2);
+                Instantiate(obstacles[1], spawn, Quaternion.identity);
+                spawn.z += 10;
+                spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+                spawn.y = -13;
+                Instantiate(obstacles[2], spawn, Quaternion.Euler(90,0,0));
+                spawn.z += 10;
+            }
             return;
         }
     }
