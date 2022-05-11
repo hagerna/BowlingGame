@@ -39,7 +39,7 @@ public class LevelGenerator : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(_instance);
-        currentWorld = 0;
+        currentWorld = 4;
         foreach (GameObject ball in ballPrefabs)
         {
             if (touchControls)
@@ -66,9 +66,15 @@ public class LevelGenerator : MonoBehaviour
         Vector3 lanePosition = new Vector3(0, 0, (laneLength / 2f) - 5f);
         if (currentWorld == 1)
         {
-            lanePosition = new Vector3(0, 0, -5);
+            lanePosition = new Vector3(0, 0, 0);
             Instantiate(lanes[currentWorld], lanePosition, Quaternion.identity);
             laneLength = 160;
+        }
+        else if (currentWorld == 4)
+        {
+            lanePosition = new Vector3(0, 0, -5);
+            Instantiate(lanes[currentWorld], lanePosition, Quaternion.identity);
+            laneLength = 192;
         }
         else
         {
@@ -84,6 +90,10 @@ public class LevelGenerator : MonoBehaviour
             }
         }
         Vector3 firstPin = new Vector3(Offset, 1, laneLength - (pinRows * pinSeparation + 5.5f));
+        if (currentWorld == 4)
+        {
+            firstPin.y -= 24.5f;
+        }
         SelectBall();
         GeneratePins(pinRows, firstPin, pinSeparation);
         GenerateObstacles(pinRows + Offset, firstPin.z);
@@ -201,7 +211,7 @@ public class LevelGenerator : MonoBehaviour
                 GenerateWorld3Level(level, laneWidth, laneLength);
                 break;
             case 4:
-                //GenerateWorld4Level(level, laneWidth, laneLength);
+                GenerateWorld4Level(level, laneWidth, laneLength);
                 break;
             default:
                 Debug.Log("Error on GenerateObstacles() --> switch failed");
@@ -457,18 +467,18 @@ public class LevelGenerator : MonoBehaviour
         if (level < 10)
         {
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
-            spawn.z = laneLength / 5 + Random.Range(-15,0);
+            spawn.z = laneLength / 5 + Random.Range(-15, 0);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
             spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
             spawn.z = 4 * laneLength / 5 + Random.Range(30, 40);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
             spawn.x = Random.Range(-(laneWidth / 2), laneWidth / 2);
-            spawn.z = Random.Range((laneLength / 2) -30, laneLength / 2) - 20;
+            spawn.z = Random.Range((laneLength / 2) - 30, laneLength / 2) - 20;
             Instantiate(obstacles[2], spawn, Quaternion.identity);
             spawn.y = -13f;
             spawn.x = Random.Range(-(laneWidth / 2), laneWidth / 2);
             spawn.z += Random.Range(15, 30);
-            Instantiate(obstacles[2], spawn, Quaternion.Euler(90,0,0));
+            Instantiate(obstacles[2], spawn, Quaternion.Euler(90, 0, 0));
             spawn.x = Random.Range(-(laneWidth / 2), laneWidth / 2);
             spawn.z += Random.Range(15, 30);
             Instantiate(obstacles[2], spawn, Quaternion.Euler(90, 0, 0));
@@ -504,11 +514,74 @@ public class LevelGenerator : MonoBehaviour
                 spawn.z += 10;
                 spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
                 spawn.y = -13;
-                Instantiate(obstacles[2], spawn, Quaternion.Euler(90,0,0));
+                Instantiate(obstacles[2], spawn, Quaternion.Euler(90, 0, 0));
                 spawn.z += 10;
             }
             return;
         }
+    }
+
+    float ySlope(float z)
+    {
+        return (-0.27f * z) + 11.9f;
+    }
+
+    void GenerateWorld4Level(int level, float laneWidth, float laneLength)
+        {
+            level %= 20;
+            Vector3 spawn = Vector3.up;
+            if (level < 5)
+            {
+                spawn.z = 50;
+                for (int i = 0; i < 4; i++)
+                {
+                    spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+                    spawn.y = ySlope(spawn.z);
+                    Instantiate(obstacles[0], spawn, Quaternion.Euler(15, 0, 0));
+                    spawn.z += 25;
+                }
+                return;
+            }
+            if (level < 10)
+            {
+                spawn.z = 50;
+                for (int i = 0; i < 4; i++)
+                {
+                    spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+                    spawn.y = ySlope(spawn.z);
+                    Instantiate(obstacles[0], spawn, Quaternion.Euler(15, 0, 0));
+                    spawn.z += 25;
+                }
+
+            }
+            if (level < 15)
+            {
+                spawn.z = Random.Range((laneLength / 2) - 40, laneLength / 2) - 30;
+                for (int i = 0; i < 10; i++)
+                {
+                    spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+                    spawn.y = Random.Range(-10, 2);
+                    Instantiate(obstacles[0], spawn, Quaternion.identity);
+                    spawn.z += 11;
+                }
+                return;
+            }
+            if (level < 20)
+            {
+                spawn.z = laneLength / 2 - 50;
+                for (int i = 0; i < 6; i++)
+                {
+                    spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+                    spawn.y = Random.Range(-10, 2);
+                    Instantiate(obstacles[1], spawn, Quaternion.identity);
+                    spawn.z += 10;
+                    spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+                    spawn.y = -13;
+                    Instantiate(obstacles[2], spawn, Quaternion.Euler(90, 0, 0));
+                    spawn.z += 10;
+                }
+                return;
+            }
     }
 
     // Create a new ball object for the player to roll again

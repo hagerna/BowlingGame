@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour
         baseData["bumperLivesTotal"] = 0;
         baseData["pinRows"] = 4;
         baseData["laneLength"] = 50;
+        baseData["speed"] = 10;
+        baseData["control"] = 5;
         pinsCollected = 0;
         pinSeparation = 1f;
     }
@@ -151,7 +153,7 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(2f); // wait for celebration graphic
         }
-        gameData["level"]+=5;
+        gameData["level"]++;
         gameData["ballsLeft"] = gameData["ballsPerLevel"];
         if (gameData["level"] % 5 == 0)
         {
