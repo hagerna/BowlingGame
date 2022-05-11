@@ -677,17 +677,21 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
+      propertyPath: touchControls
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
       propertyPath: generateOnStart
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
       propertyPath: lanes.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
       propertyPath: lanes.Array.data[0]
       value: 
-      objectReference: {fileID: 4767239208570625954, guid: 408cf750a5c7f4db1ba391cc30c3fc6f, type: 3}
+      objectReference: {fileID: 4767239208570625954, guid: bbe19c94e7cdc44f8aa8e025ddcbf6d9, type: 3}
     - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
       propertyPath: lanes.Array.data[1]
       value: 

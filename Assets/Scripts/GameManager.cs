@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         //"bumperLivesTotal" --> to reset bumperLives between runs
         //"
         baseData["ballsLeft"] = 2;
-        baseData["ballsPerLevel"] = 2;
+        baseData["ballsPerLevel"] = 8;
         baseData["level"] = 0;
         baseData["strikes"] = 0;
         baseData["strikeStreak"] = 0;
@@ -76,6 +76,14 @@ public class GameManager : MonoBehaviour
         foreach (KeyValuePair<string,int> variable in baseData)
         {
             gameData[variable.Key] = variable.Value;
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            StartCoroutine(NextLevel());
         }
     }
 
@@ -143,12 +151,17 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(2f); // wait for celebration graphic
         }
-        gameData["level"]++;
+        gameData["level"]+=5;
         gameData["ballsLeft"] = gameData["ballsPerLevel"];
         if (gameData["level"] % 5 == 0)
         {
             gameData["pinRows"]++;
             gameData["laneLength"]+=5;
+        }
+        if (gameData["level"] % 20 == 0)
+        {
+            gameData["pinRows"] -= 4;
+            gameData["laneLength"] -= 20;
         }
         SceneManager.LoadScene("Base Level");
         yield return new WaitForEndOfFrame();

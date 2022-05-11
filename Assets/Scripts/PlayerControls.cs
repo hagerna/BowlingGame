@@ -80,6 +80,10 @@ public class PlayerControls : MonoBehaviour
         {
             HandleObstacle();
         }
+        if (collision.collider.CompareTag("Bouncy"))
+        {
+            Boost(Vector3.up + 0.25f * Vector3.forward);
+        }
     }
 
     void HandleImpactEffect()
