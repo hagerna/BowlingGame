@@ -14,68 +14,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopItems:
   - itemName: fire
-    isUnlocked: 1
+    isUnlocked: 0
     unlockCost: 1500
     unlockedLevel: 0
     incrementCost: 0
     incrementValue: 0
-    currentLevelText: {fileID: 0}
-    currentCostText: {fileID: 0}
   - itemName: ghost
     isUnlocked: 0
     unlockCost: 3000
     unlockedLevel: 0
     incrementCost: 0
     incrementValue: 0
-    currentLevelText: {fileID: 0}
-    currentCostText: {fileID: 0}
   - itemName: gold
     isUnlocked: 0
     unlockCost: 5000
     unlockedLevel: 0
     incrementCost: 0
     incrementValue: 0
-    currentLevelText: {fileID: 0}
-    currentCostText: {fileID: 0}
   - itemName: vortex
     isUnlocked: 0
     unlockCost: 10000
     unlockedLevel: 0
     incrementCost: 0
     incrementValue: 0
-    currentLevelText: {fileID: 0}
-    currentCostText: {fileID: 0}
-  - itemName: movementSpeed
+  - itemName: speed
     isUnlocked: 0
-    unlockCost: 100
-    unlockedLevel: 0
+    unlockCost: 300
+    unlockedLevel: 1
     incrementCost: 100
-    incrementValue: 0
-    currentLevelText: {fileID: 0}
-    currentCostText: {fileID: 0}
+    incrementValue: 2
   - itemName: control
     isUnlocked: 0
     unlockCost: 100
     unlockedLevel: 0
     incrementCost: 100
-    incrementValue: 0
-    currentLevelText: {fileID: 0}
-    currentCostText: {fileID: 0}
+    incrementValue: 2
   - itemName: ballsPerLevel
     isUnlocked: 0
     unlockCost: 1500
     unlockedLevel: 0
     incrementCost: 1000
-    incrementValue: 0
-    currentLevelText: {fileID: 0}
-    currentCostText: {fileID: 0}
-  - itemName: bumperLives
+    incrementValue: 1
+  - itemName: bumperLivesTotal
     isUnlocked: 0
     unlockCost: 500
     unlockedLevel: 0
     incrementCost: 1500
-    incrementValue: 0
-    currentLevelText: {fileID: 0}
-    currentCostText: {fileID: 0}
+    incrementValue: 1
   selectedIndex: 0
   selectedName: 

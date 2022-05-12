@@ -24,6 +24,5 @@ namespace ShopSystem {
         public int unlockCost;
         public int unlockedLevel = 1;
         public int incrementCost, incrementValue;
-        public Text currentLevelText, currentCostText;
     }
 }
