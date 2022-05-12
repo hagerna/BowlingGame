@@ -209,38 +209,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelGenerator
       objectReference: {fileID: 0}
-    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
-      propertyPath: touchControls
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
-      propertyPath: lanes.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
-      propertyPath: lanes.Array.data[2]
-      value: 
-      objectReference: {fileID: 4767239208570625954, guid: 552414ff9dec746f4b95b7c21bfc72cd, type: 3}
-    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
-      propertyPath: lanes.Array.data[3]
-      value: 
-      objectReference: {fileID: 4767239208570625954, guid: ef3c8093e50c94e7b9db0e24c75d7efc, type: 3}
-    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
-      propertyPath: lanes.Array.data[4]
-      value: 
-      objectReference: {fileID: 5110458886203041792, guid: 8cacf8b141ff645cf9af3e97f7cc25b0, type: 3}
-    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
-      propertyPath: obstacles.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
-      propertyPath: obstacles.Array.data[1]
-      value: 
-      objectReference: {fileID: 1138177771573307828, guid: 05201553eaaac4372a03de97d898fb2b, type: 3}
-    - target: {fileID: 211977590211578729, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
-      propertyPath: obstacles.Array.data[2]
-      value: 
-      objectReference: {fileID: 1138177771573307828, guid: 6108a5a82f3b44ca2ab11e8539a6298f, type: 3}
     - target: {fileID: 211977590211578730, guid: f9f9b7f4edf7b4d3487fab1106943bd7, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -775,7 +743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7745255835832867775, guid: 6804a27476eab4720a952b8713d4cf2e, type: 3}
       propertyPath: currentBall
-      value: vortex
+      value: fire
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6804a27476eab4720a952b8713d4cf2e, type: 3}

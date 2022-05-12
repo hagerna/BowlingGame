@@ -41,7 +41,7 @@ public class PlayerControls : MonoBehaviour
         {
             StartCoroutine(GhostMode());
         }
-        if ((rb.velocity.z < 0.25f) || !initialBoost)
+        if ((rb.velocity.z < 0.25f) && !initialBoost)
         {
             HandleObstacle();
         }

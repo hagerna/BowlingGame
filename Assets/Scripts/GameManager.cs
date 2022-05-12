@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         //"bumperLivesTotal" --> to reset bumperLives between runs
         //"
         baseData["ballsLeft"] = 2;
-        baseData["ballsPerLevel"] = 8;
+        baseData["ballsPerLevel"] = 4;
         baseData["level"] = 0;
         baseData["strikes"] = 0;
         baseData["strikeStreak"] = 0;
