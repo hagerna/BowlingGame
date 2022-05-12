@@ -24,6 +24,8 @@ public class TouchControls : MonoBehaviour
         // make the camera follow the game object this script is attached to
         Camera.main.GetComponent<CameraFollow>().player = gameObject;
         Camera.main.GetComponent<CameraFollow>().follow = true;
+        forwardSpeed = GameManager.Instance.gameData["speed"];
+        horizontalControl = GameManager.Instance.gameData["control"];
         StartCoroutine(InitialLaunch());
     }
 
