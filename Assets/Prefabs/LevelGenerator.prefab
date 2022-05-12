@@ -50,8 +50,13 @@ MonoBehaviour:
   lanes:
   - {fileID: 4767239208570625954, guid: bbe19c94e7cdc44f8aa8e025ddcbf6d9, type: 3}
   - {fileID: 4767239208570625954, guid: 408cf750a5c7f4db1ba391cc30c3fc6f, type: 3}
+  - {fileID: 4767239208570625954, guid: 552414ff9dec746f4b95b7c21bfc72cd, type: 3}
+  - {fileID: 4767239208570625954, guid: ef3c8093e50c94e7b9db0e24c75d7efc, type: 3}
+  - {fileID: 5110458886203041792, guid: 8cacf8b141ff645cf9af3e97f7cc25b0, type: 3}
   obstacles:
   - {fileID: 1138177771573307828, guid: 47c55553d23ee493a823a4255ff5995a, type: 3}
+  - {fileID: 1138177771573307828, guid: 05201553eaaac4372a03de97d898fb2b, type: 3}
+  - {fileID: 1138177771573307828, guid: 6108a5a82f3b44ca2ab11e8539a6298f, type: 3}
   ballPrefabs:
   - {fileID: 2800437294105566993, guid: 739c428b30ad0400d818569e4d082ab2, type: 3}
   - {fileID: 2800437294105566993, guid: 2aaa1a2b4bb48436aa33eba5770c48ae, type: 3}
@@ -59,4 +64,4 @@ MonoBehaviour:
   - {fileID: 2800437294105566993, guid: 2a245250f34fa4a5e8806b532aca424d, type: 3}
   - {fileID: 2800437294105566993, guid: 371edf223e37c43a0a94027cd1196466, type: 3}
   worldsCompleted: 00000000
-  touchControls: 1
+  touchControls: 0

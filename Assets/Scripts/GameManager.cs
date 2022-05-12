@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(2f); // wait for celebration graphic
         }
-        gameData["level"]++;
+        gameData["level"]+=5;
         gameData["ballsLeft"] = gameData["ballsPerLevel"];
         if (gameData["level"] % 5 == 0)
         {
