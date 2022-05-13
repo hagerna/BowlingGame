@@ -39,8 +39,8 @@ MonoBehaviour:
     incrementValue: 0
   - itemName: speed
     isUnlocked: 0
-    unlockCost: 300
-    unlockedLevel: 1
+    unlockCost: 100
+    unlockedLevel: 0
     incrementCost: 100
     incrementValue: 2
   - itemName: control

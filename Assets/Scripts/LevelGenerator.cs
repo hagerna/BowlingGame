@@ -10,7 +10,6 @@ public class LevelGenerator : MonoBehaviour
     public GameObject[] ballPrefabs;
     int currentWorld;
     public bool[] worldsCompleted;
-    public bool touchControls;
 
     private static LevelGenerator _instance;
     public static LevelGenerator Instance
@@ -40,19 +39,6 @@ public class LevelGenerator : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(_instance);
         currentWorld = 0;
-        foreach (GameObject ball in ballPrefabs)
-        {
-            if (touchControls)
-            {
-                ball.GetComponent<PlayerControls>().enabled = false;
-                ball.GetComponent<TouchControls>().enabled = true;
-            }
-            else
-            {
-                ball.GetComponent<TouchControls>().enabled = false;
-                ball.GetComponent<PlayerControls>().enabled = true;
-            }
-        }
     }
 
     //Generate Level by instantiating lane, pins, and bowling ball (obstacles not implemented yet)
@@ -62,7 +48,7 @@ public class LevelGenerator : MonoBehaviour
                 //laneColor --> what color the lane is
     public void GenerateLevel(int pinRows, float laneLength, float pinSeparation, float Offset = 0f)
     {
-        CheckWorld();
+        CheckWorld(); // Determine current world
         Vector3 lanePosition = new Vector3(0, 0, (laneLength / 2f) - 5f);
         if (currentWorld == 1)
         {
@@ -122,15 +108,15 @@ public class LevelGenerator : MonoBehaviour
                 worldsCompleted[i] = false;
             }
         }
-        currentWorld = Random.Range(1, 5);
-        while (worldsCompleted[currentWorld-1])
+        currentWorld = Random.Range(0, 5);
+        while (worldsCompleted[currentWorld])
         {
-            currentWorld = Random.Range(1, 5);
+            currentWorld = Random.Range(0, 5);
         }
-        worldsCompleted[currentWorld-1] = true;
+        worldsCompleted[currentWorld] = true;
     }
 
-
+    // Based on the current ball tracked in Game Manager, select ball prefab to spawn
     void SelectBall()
     {
         switch (GameManager.Instance.currentBall)
@@ -177,15 +163,9 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int pins = 0; pins < pinsPerRow; pins++)
         {
-            SelectPin(pinPosition);
+            Instantiate(pin, pinPosition, Quaternion.identity);
             pinPosition.x -= pinSeparation;
         }
-    }
-
-    //Function to determine type of pin placed, allows for later changes
-    void SelectPin(Vector3 position)
-    {
-        Instantiate(pin, position, Quaternion.identity);
     }
 
     //Script to randomly generate obstacles based on currentWorld --> calls helper script
@@ -221,6 +201,16 @@ public class LevelGenerator : MonoBehaviour
 
     }
 
+    // Create a new ball object for the player to roll again
+    public void NewBall()
+    {
+        Instantiate(ball, Vector3.up, Quaternion.LookRotation(Vector3.right));
+    }
+
+
+
+    // WORLD OBSTACLE POSITIONING FUNCTIONS BELOW
+
     // World 0 is the basic world, player will always go through variation of same 20 levels to start
     void GenerateWorld0Level(int level, float laneWidth, float laneLength)
     {
@@ -228,7 +218,15 @@ public class LevelGenerator : MonoBehaviour
         Vector3 spawn = Vector3.up;
         if (level < 5)
         {
-            spawn.x = Random.Range(-(laneWidth / 2) + 1, (laneWidth / 2) - 1);
+            int select = Random.Range(0, 2);
+            if (select == 0)
+            {
+                spawn.x = 1f;
+            }
+            else
+            {
+                spawn.x = -1f;
+            }
             spawn.z = Random.Range((laneLength / 2) - 10, (laneLength / 2) + 10);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
             return;
@@ -273,6 +271,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    // Helix World
     void GenerateWorld1Level(int level, float laneWidth, float laneLength)
     {
         level %= 20;
@@ -356,6 +355,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    // Ramps World
     void GenerateWorld2Level(int level, float laneWidth, float laneLength)
     {
         level %= 20;
@@ -446,6 +446,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    // Bouncy World
     void GenerateWorld3Level(int level, float laneWidth, float laneLength)
     {
         level %= 20;
@@ -516,6 +517,8 @@ public class LevelGenerator : MonoBehaviour
             return;
         }
     }
+
+    // Slope World
 
     float ySlope(float z)
     {
@@ -594,11 +597,5 @@ public class LevelGenerator : MonoBehaviour
                 Instantiate(obstacles[1], spawn, Quaternion.identity);
                 return;
             }
-    }
-
-    // Create a new ball object for the player to roll again
-    public void NewBall()
-    {
-        Instantiate(ball, Vector3.up, Quaternion.LookRotation(Vector3.right));
     }
 }

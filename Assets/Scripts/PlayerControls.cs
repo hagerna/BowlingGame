@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    public float forwardSpeed = 20;
-    public float horizontalControl = 4;
+    public float forwardSpeed, horizontalControl;
     public bool movementLocked = false;
     bool resetTriggered = false;
     bool initialBoost = true;
@@ -106,7 +105,6 @@ public class PlayerControls : MonoBehaviour
         }
         explosion = false;
         blackhole = false;
-        //HandleObstacle();
     }
 
     private void OnTriggerEnter(Collider other)

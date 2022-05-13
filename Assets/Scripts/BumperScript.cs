@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BumperScript : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +15,7 @@ public class BumperScript : MonoBehaviour
     {
         while (GameManager.Instance.gameData["bumperLives"] > 0)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.1f);         
         }
         gameObject.SetActive(false);
     }

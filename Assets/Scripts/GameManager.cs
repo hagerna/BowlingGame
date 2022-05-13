@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public float pinsCollected, pinSeparation, totalScore;
     public string currentBall; //types: basic, fire, gold, ghost, vortex
     public GameObject scoreScreenUI;
-    public bool LoadOnStart = true;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -42,10 +41,6 @@ public class GameManager : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(_instance);
         InitializeData();
-        if (LoadOnStart)
-        {
-            LevelReset();
-        }
     }
 
     private void InitializeData()
@@ -59,7 +54,7 @@ public class GameManager : MonoBehaviour
         //"bumperLivesTotal" --> to reset bumperLives between runs
         //"
         baseData["ballsLeft"] = 2;
-        baseData["ballsPerLevel"] = 4;
+        baseData["ballsPerLevel"] = 2;
         baseData["level"] = 0;
         baseData["strikes"] = 0;
         baseData["strikeStreak"] = 0;
@@ -73,20 +68,14 @@ public class GameManager : MonoBehaviour
         pinSeparation = 1f;
     }
 
+    // Transfer base data dictionary into game data dictionary
     void BaseToGameData()
     {
         foreach (KeyValuePair<string,int> variable in baseData)
         {
             gameData[variable.Key] = variable.Value;
         }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            StartCoroutine(NextLevel());
-        }
+        gameData["bumperLives"] = baseData["bumperLivesTotal"];
     }
 
 
@@ -153,7 +142,7 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(2f); // wait for celebration graphic
         }
-        gameData["level"]+=5;
+        gameData["level"]++;
         gameData["ballsLeft"] = gameData["ballsPerLevel"];
         if (gameData["level"] % 5 == 0)
         {
@@ -184,5 +173,10 @@ public class GameManager : MonoBehaviour
     {
         totalScore += pinsCollected + (gameData["strikes"] * 10);
         return totalScore;
+    }
+
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
     }
 }

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2800437294105566995}
   - component: {fileID: 2800437294105566992}
   - component: {fileID: 2800437294105566999}
-  - component: {fileID: 7938179907743935867}
   m_Layer: 0
   m_Name: Ghost Ball
   m_TagString: Player
@@ -133,30 +132,6 @@ MonoBehaviour:
   gold: 0
   ghost: 1
   blackhole: 0
-  impactEffect: {fileID: 0}
-  deathEffect: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
-  ghostRegular: {fileID: 2100000, guid: d5f2fb5e3c11540a7a384f5387eac815, type: 2}
-  ghostFade: {fileID: 2100000, guid: 8b0277ce9d3bd4742b31c33401878cb4, type: 2}
---- !u!114 &7938179907743935867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2800437294105566993}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db55d5dac0fe4736a653d76b806bba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forwardSpeed: 10
-  horizontalControl: 5
-  movementLocked: 1
-  initialLaunch: 1
-  explosion: 0
-  gold: 0
-  blackhole: 0
-  ghost: 1
   impactEffect: {fileID: 0}
   deathEffect: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
   ghostRegular: {fileID: 2100000, guid: d5f2fb5e3c11540a7a384f5387eac815, type: 2}

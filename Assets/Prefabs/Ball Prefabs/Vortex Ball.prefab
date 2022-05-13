@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2800437294105566995}
   - component: {fileID: 2800437294105566992}
   - component: {fileID: 2800437294105566999}
-  - component: {fileID: 2651044326907626825}
   m_Layer: 0
   m_Name: Vortex Ball
   m_TagString: Player
@@ -133,30 +132,6 @@ MonoBehaviour:
   gold: 0
   ghost: 0
   blackhole: 1
-  impactEffect: {fileID: 3123075737211501168, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
-  deathEffect: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
-  ghostRegular: {fileID: 0}
-  ghostFade: {fileID: 0}
---- !u!114 &2651044326907626825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2800437294105566993}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db55d5dac0fe4736a653d76b806bba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forwardSpeed: 10
-  horizontalControl: 5
-  movementLocked: 1
-  initialLaunch: 1
-  explosion: 0
-  gold: 0
-  blackhole: 1
-  ghost: 0
   impactEffect: {fileID: 3123075737211501168, guid: a3f72d5f213bb7d458dfc2c4369e7acf, type: 3}
   deathEffect: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
   ghostRegular: {fileID: 0}

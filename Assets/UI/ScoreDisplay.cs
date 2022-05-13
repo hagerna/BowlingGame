@@ -16,12 +16,6 @@ public class ScoreDisplay : MonoBehaviour
         StartCoroutine(FadeIn());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator FadeIn()
     {
         pinsHit.text = "Total Pins Hit: " + GameManager.Instance.pinsCollected;
