@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public float pinsCollected, pinSeparation, totalScore;
     public string currentBall; //types: basic, fire, gold, ghost, vortex
     public GameObject scoreScreenUI;
+    bool firstRun = true;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -166,6 +167,14 @@ public class GameManager : MonoBehaviour
         BaseToGameData();
         pinsCollected = 0;
         pinSeparation = 1f;
+        if (!firstRun)
+        {
+            LevelGenerator.Instance.NewRun();
+        }
+        else
+        {
+            firstRun = false;
+        }
         StartCoroutine(NextLevel());
     }
 
@@ -173,10 +182,5 @@ public class GameManager : MonoBehaviour
     {
         totalScore += pinsCollected + (gameData["strikes"] * 10);
         return totalScore;
-    }
-
-    public void LoadTutorial()
-    {
-        SceneManager.LoadScene("Tutorial");
     }
 }

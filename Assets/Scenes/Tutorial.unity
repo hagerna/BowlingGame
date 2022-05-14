@@ -158,8 +158,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 167.17102, y: -1058.6875}
-  m_SizeDelta: {x: 775.658, y: 294.6251}
+  m_AnchoredPosition: {x: 368.9582, y: -1068.4514}
+  m_SizeDelta: {x: 372.0837, y: 275.0973}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2212478
 MonoBehaviour:
@@ -529,10 +529,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slides:
-  - {fileID: 2800000, guid: 4ac7fd0221fb04f80a9338c82b0b6a21, type: 3}
-  - {fileID: 2800000, guid: 281be0169f9734aacbe12741ae851fff, type: 3}
-  - {fileID: 2800000, guid: 5645761d2ef894b14843808126f96717, type: 3}
-  - {fileID: 2800000, guid: 215eda4c6019741c39361b1674c887ec, type: 3}
+  - {fileID: 2800000, guid: 6c89d7a3dbca04ef7a44a8b6ca322be5, type: 3}
+  - {fileID: 2800000, guid: d371f773dcfba4526b5d9472e573208d, type: 3}
+  - {fileID: 2800000, guid: 588eca1fca02f4ff1a4fc03d92ce79e5, type: 3}
+  - {fileID: 2800000, guid: 3d80bd5a2c01749aaa58096956b4e1c5, type: 3}
+  - {fileID: 2800000, guid: 2476d617f476e4d048f2be6aa783647b, type: 3}
 --- !u!114 &1651502392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,7 +554,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 4ac7fd0221fb04f80a9338c82b0b6a21, type: 3}
+  m_Texture: {fileID: 2800000, guid: 6c89d7a3dbca04ef7a44a8b6ca322be5, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -577,7 +578,7 @@ RectTransform:
   m_GameObject: {fileID: 1651502390}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070029976}
   m_RootOrder: 0

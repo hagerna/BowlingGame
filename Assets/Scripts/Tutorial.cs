@@ -20,7 +20,7 @@ public class Tutorial : MonoBehaviour
 
     public void NextSlide()
     {
-        if (currentSlide < 3)
+        if (currentSlide < 4)
         {
             currentSlide++;
             display.texture = slides[currentSlide];

@@ -34,7 +34,8 @@ public class AudioSingleton : MonoBehaviour
     {
         if (_instance != null)
         {
-            Destroy(_instance.gameObject);
+            Destroy(gameObject);
+            return;
         }
         _instance = this;
         DontDestroyOnLoad(_instance);
@@ -48,12 +49,7 @@ public class AudioSingleton : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
-        PlayMusic("MenuMusic");
-    }
-
-    private void Update()
-    {
-        
+        PlayMusic("GameMusic");
     }
 
     public static void Play(string name)

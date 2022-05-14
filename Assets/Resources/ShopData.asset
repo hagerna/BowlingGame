@@ -14,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopItems:
   - itemName: fire
-    isUnlocked: 0
+    isUnlocked: 1
     unlockCost: 1500
     unlockedLevel: 0
     incrementCost: 0
     incrementValue: 0
   - itemName: ghost
-    isUnlocked: 0
+    isUnlocked: 1
     unlockCost: 3000
     unlockedLevel: 0
     incrementCost: 0
     incrementValue: 0
   - itemName: gold
-    isUnlocked: 0
+    isUnlocked: 1
     unlockCost: 5000
     unlockedLevel: 0
     incrementCost: 0
@@ -59,7 +59,7 @@ MonoBehaviour:
     isUnlocked: 0
     unlockCost: 500
     unlockedLevel: 0
-    incrementCost: 1500
+    incrementCost: 500
     incrementValue: 1
   selectedIndex: 0
   selectedName: 

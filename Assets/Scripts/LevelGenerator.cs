@@ -10,6 +10,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject[] ballPrefabs;
     int currentWorld;
     public bool[] worldsCompleted;
+    bool tutorialComplete = false;
 
     private static LevelGenerator _instance;
     public static LevelGenerator Instance
@@ -84,6 +85,18 @@ public class LevelGenerator : MonoBehaviour
         GeneratePins(pinRows, firstPin, pinSeparation);
         GenerateObstacles(pinRows + Offset, firstPin.z);
     }
+
+    public void NewRun() {
+        if (tutorialComplete)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                worldsCompleted[i] = false;
+            }
+            currentWorld = Random.Range(0, 5);
+        }
+    }
+
 
     //Every twenty levels pick a new world, one that the player has not played already, resetting if they have played them all
     void CheckWorld()
@@ -172,10 +185,6 @@ public class LevelGenerator : MonoBehaviour
     void GenerateObstacles(float laneWidth, float laneLength)
     {
         int level = GameManager.Instance.gameData["level"];
-        if (level == 1)
-        {
-            return;
-        }
         switch (currentWorld)
         {
             case 0:
@@ -216,6 +225,10 @@ public class LevelGenerator : MonoBehaviour
     {
         level %= 20;
         Vector3 spawn = Vector3.up;
+        if (level == 1)
+        {
+            return;
+        }
         if (level < 5)
         {
             int select = Random.Range(0, 2);
@@ -244,6 +257,7 @@ public class LevelGenerator : MonoBehaviour
         }
         if (level == 10)
         {
+            tutorialComplete = true;
             return;
         }
         if (level < 15)
@@ -279,14 +293,14 @@ public class LevelGenerator : MonoBehaviour
         if (level < 5)
         {
             spawn.x = Random.Range(-1.5f, 1.5f);
-            spawn.z = Random.Range(5, 25);
+            spawn.z = Random.Range(10, 25);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
             return;
         }
         if (level < 10)
         {
             spawn.x = Random.Range(-1.5f, 1.5f);
-            spawn.z = Random.Range(5, 25);
+            spawn.z = Random.Range(10, 25);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
             spawn.x = Random.Range(-1.5f, 1.5f);
             spawn.z = Random.Range(125, 140);
@@ -297,7 +311,7 @@ public class LevelGenerator : MonoBehaviour
         if (level < 15)
         {
             spawn.x = Random.Range(-1.5f, 1.5f);
-            spawn.z = Random.Range(5, 25);
+            spawn.z = Random.Range(10, 25);
             Instantiate(obstacles[0], spawn, Quaternion.identity);
             spawn.x = Random.Range(-1.5f, 1.5f);
             spawn.z = Random.Range(125, 140);
