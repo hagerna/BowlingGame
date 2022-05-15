@@ -136,6 +136,7 @@ public class TouchControls : MonoBehaviour
             {
                 HandleImpactEffect();
             }
+            Invoke(nameof(HandleObstacle), 3f);
         }
         if (collision.collider.CompareTag("Obstacle"))
         {
